@@ -1,0 +1,43 @@
+Package: eptb2022
+Title: Creer une plaquette 4 pages a partir de donnees geokit et csv
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Georges", "Winterstein", email = "georges.winterstein@developpement-durable.gouv.fr", role = c("aut", "cre")),
+    person("DREAL Corse", role = "cph")
+  )
+Description: Transforme le resultat de la requete geokit et des tableaux 
+    issus du site sdes (outil beyond) en plaquette 4 pages creee precedemment 
+    dans scribus.
+License: MIT + file LICENSE
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Suggests: 
+    knitr,
+    rmarkdown,
+Imports: 
+    stats,
+    magrittr,
+    purrr,
+    dplyr,
+    readr,
+    tibble,
+    tidyr,
+    here,
+    stringr,
+    readxl,
+    ggplot2,
+    sf,
+    grid,
+    cowplot,
+    rio,
+    utf8,
+    xml2,
+    ggrepel,
+    magick,
+    rlang
+Depends: 
+    R (>= 2.10)
