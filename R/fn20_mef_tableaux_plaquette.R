@@ -185,56 +185,56 @@ fn20_mef_tableaux_plaquette <-
     resultats[["tab4"]] <-
       tab4_maisons_3indics %>% dplyr::select(-c(annee, indic, indic_cat_cd))
 
-    # H1 Tab 1_raw Terrains corse, departements, FR ---------
+    # # H1 Tab 1_raw Terrains corse, departements, FR ---------
+    # #
+    # ind_dec = c("prix_m2", "prix", "surf_m2", "cout_projet")
+    # ind_pourcent = c("part", "part_projet")
+    # ind_part = c("Part")
     #
-    ind_dec = c("prix_m2", "prix", "surf_m2", "cout_projet")
-    ind_pourcent = c("part", "part_projet")
-    ind_part = c("Part")
-
-    data$doc_frcordep_filtre %>%
-      dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
-      dplyr::select(-annee) %>%
-      dplyr::select(-type) -> resultats[["tab1_raw"]]
-
-    # H2 Tab 2_raw Terrains corse pour 4 indicateurs --------
-
-    data$tab2_terrains %>%
-      dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
-      dplyr::arrange(indic, indic_cat) %>%
-      tidyr::separate(
-        indic_cat,
-        into = c("indic_cat_cd", "indic_cat"),
-        sep = " : ",
-        remove = TRUE,
-        convert = TRUE
-      )%>% dplyr::select(-c(annee, indic, indic_cat_cd))-> resultats[["tab2_raw"]]
-
-    #  H3 Tab 3_raw maisons par territoires --------
-    ind_dec = c("prix_m2", "prix")
-    ind_pourcent = c("part")
-    ind_part = c("Part")
-
-
-    data$doc_frcordep_ssfiltre %>%
-      dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
-      dplyr::select(-annee) %>%
-      dplyr::select(-type) -> resultats[["tab3_raw"]]
-
-
-    #  H4 Tab 4_raw maisons corse pour 4 indicateurs
-
-    data$tab4_maisons %>%
-      dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
-      dplyr::arrange(indic, indic_cat) %>%
-      dplyr::filter(indic %in% c("chauffage", "moe", "finition")) %>%
-      tidyr::separate(
-        indic_cat,
-        into = c("indic_cat_cd", "indic_cat"),
-        sep = " : ",
-        remove = TRUE,
-        convert = TRUE
-      ) %>%
-      dplyr::select(-c(annee, indic, indic_cat_cd))-> resultats[["tab4_raw"]]
+    # data$doc_frcordep_filtre %>%
+    #   dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
+    #   dplyr::select(-annee) %>%
+    #   dplyr::select(-type) -> resultats[["tab1_raw"]]
+    #
+    # # H2 Tab 2_raw Terrains corse pour 4 indicateurs --------
+    #
+    # data$tab2_terrains %>%
+    #   dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
+    #   dplyr::arrange(indic, indic_cat) %>%
+    #   tidyr::separate(
+    #     indic_cat,
+    #     into = c("indic_cat_cd", "indic_cat"),
+    #     sep = " : ",
+    #     remove = TRUE,
+    #     convert = TRUE
+    #   )%>% dplyr::select(-c(annee, indic, indic_cat_cd))-> resultats[["tab2_raw"]]
+    #
+    # #  H3 Tab 3_raw maisons par territoires --------
+    # ind_dec = c("prix_m2", "prix")
+    # ind_pourcent = c("part")
+    # ind_part = c("Part")
+    #
+    #
+    # data$doc_frcordep_ssfiltre %>%
+    #   dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
+    #   dplyr::select(-annee) %>%
+    #   dplyr::select(-type) -> resultats[["tab3_raw"]]
+    #
+    #
+    # #  H4 Tab 4_raw maisons corse pour 4 indicateurs
+    #
+    # data$tab4_maisons %>%
+    #   dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
+    #   dplyr::arrange(indic, indic_cat) %>%
+    #   dplyr::filter(indic %in% c("chauffage", "moe", "finition")) %>%
+    #   tidyr::separate(
+    #     indic_cat,
+    #     into = c("indic_cat_cd", "indic_cat"),
+    #     sep = " : ",
+    #     remove = TRUE,
+    #     convert = TRUE
+    #   ) %>%
+    #   dplyr::select(-c(annee, indic, indic_cat_cd))-> resultats[["tab4_raw"]]
 
 
 
