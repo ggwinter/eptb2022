@@ -5,6 +5,13 @@
 #' @return
 #' @importFrom rio export
 #' @importFrom readr write_rds
+#' @importFrom dplyr select
+#' @importFrom dplyr mutate
+#' @importFrom dplyr case_when
+#' @importFrom dplyr rename
+#' @importFrom dplyr left_join
+#' @importFrom purrr map_dfr
+#' @importFromd plyr pull
 #' @export
 #'
 fn21_enregistre_tableaux <- function(x = ls_dates$annee_etude) {
