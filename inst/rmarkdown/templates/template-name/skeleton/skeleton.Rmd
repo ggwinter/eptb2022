@@ -132,7 +132,7 @@ fn40_scr_lit_nouveau_texte()-> ls_newtxt
 ### Plaquette lecture texte du modele
 
 ```{r}
-n41_lit_le_modele()-> t_parametres
+fn41_lit_le_modele()-> t_parametres
 
 ```
 
