@@ -27,9 +27,8 @@ fn21_enregistre_tableaux <- function(x = ls_dates$annee_etude) {
   tli_frcordepcor_filtre_ssfiltre[["evol_an"]][["doc_frcordep_filtre"]] %>%
     dplyr::select(territoire, indic, value) %>%
     dplyr::mutate(type = dplyr::case_when(
-      indic %in% c(ind_dec, "cout_projet", "surf_m2") ~ "pc",
-      indic %in% c("part_projet") ~
-        "diff"
+      indic %in% c("prix", "prix_m2", "cout_projet", "surf_m2") ~ "pc",
+      indic %in% c("part_projet") ~ "diff"
     )) %>%
     dplyr::filter(complete.cases(type)) -> eff1
 
@@ -56,7 +55,7 @@ fn21_enregistre_tableaux <- function(x = ls_dates$annee_etude) {
     return(eff1_dep)
   }
 
-  purrr::map_dfr(mes_param %>% dplyr::pull(type), fn_diff_fr_cor) -> tab_terrains_compare_dep_fr
+  purrr::map_dfr(mes_param, fn_diff_fr_cor) -> tab_terrains_compare_dep_fr
   rm(eff1_dep, eff1_fr, eff1_cor, eff1)
 
   # tableau comparatif maisons dep cor vs corse et france
@@ -64,7 +63,7 @@ fn21_enregistre_tableaux <- function(x = ls_dates$annee_etude) {
 
   tli_frcordepcor_filtre_ssfiltre[["evol_an"]][["doc_frcordep_ssfiltre"]] %>%
     dplyr::select(territoire, indic, value) %>%
-    dplyr::mutate(type = dplyr::case_when(indic %in% c(ind_dec, "surf_m2") ~
+    dplyr::mutate(type = dplyr::case_when(indic %in% c("prix", "prix_m2", "surf_m2") ~
                                             "pc",
                                           TRUE ~ NA_character_)) %>%
     dplyr::filter(complete.cases(type)) -> eff1
