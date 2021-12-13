@@ -42,7 +42,6 @@ fn20_mef_tableaux_plaquette <-
 
     tab1_terrains_cordepfr %>%
       dplyr::select(-type) %>%
-
       dplyr::mutate_at(ind_dec, ~ format_dec(.x)) %>%
       dplyr::mutate_at(ind_pourcent, ~ format_pourcent(.x))%>%
       dplyr::rename(
@@ -70,7 +69,7 @@ fn20_mef_tableaux_plaquette <-
     # H2 Tab 2 Terrains corse pour 4 indicateurs --------
 
 
-    tab2_terrains_4indics <- tab2_terrains %>%
+    tab2_terrains_4indics <- data$tab2_terrains %>%
       dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
       dplyr::arrange(indic, indic_cat) %>%
       tidyr::separate(
@@ -86,8 +85,7 @@ fn20_mef_tableaux_plaquette <-
           indic %in% "csp" ~ "Catégorie socio-professionnelle",
           indic %in% "rp" ~ "Résidence principale",
           indic %in% "viabilisation" ~ "Viabilisation du terrain",
-          !indic %in% c("age", "csp", "rp", "viabilisation") ~
-            "Erreur d'analyse"
+          TRUE ~ "Erreur d'analyse"
 
         )
       )
@@ -118,7 +116,7 @@ fn20_mef_tableaux_plaquette <-
     ind_part = c("Part")
 
 
-    tab3_maisons_cordepfr <- doc_frcordep_ssfiltre %>%
+    tab3_maisons_cordepfr <- data$doc_frcordep_ssfiltre %>%
       dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
       dplyr::select(-annee)
 
@@ -149,7 +147,7 @@ fn20_mef_tableaux_plaquette <-
 
     #  H4 Tab 4 maisons corse pour 4 indicateurs
 
-    tab4_maisons_3indics <- tab4_maisons %>%
+    tab4_maisons_3indics <- data$tab4_maisons %>%
       dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
       dplyr::arrange(indic, indic_cat) %>%
       dplyr::filter(indic %in% c("chauffage", "moe", "finition")) %>%
