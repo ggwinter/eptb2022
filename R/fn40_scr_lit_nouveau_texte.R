@@ -38,9 +38,45 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     pt_m2_an_q3 = tab_calculs[["terrains_autres_reg"]] %>%
       dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2q3),
 
-    pt_m2_an_diff_fr_dpt <- tab_calculs[["terrains_an"]] %>%
-      dplyr::filter(!territoire %in% "Corse", indic %in% "prix_m2") %>%
-      dplyr::pull(value)
+    # difference prix_m2 departements corses et france
+
+    pt_an_m2_diff_fr_dpt2a <- tab_calculs[["terrains_depcor_compare_fr"]] %>%
+      dplyr::filter(indic %in% "prix_m2", territoire %in% "Corse-du-Sud") %>%
+      dplyr::pull(dt_dep_cor),
+
+    pt_an_m2_diff_fr_dpt2b <- tab_calculs[["terrains_depcor_compare_fr"]] %>%
+      dplyr::filter(indic %in% "prix_m2", territoire %in% "Haute-Corse") %>%
+      dplyr::pull(dt_dep_cor),
+
+    # difference prix terrain departements corses et france
+
+    pt_an_diff_fr_dpt2a <- tab_calculs[["terrains_depcor_compare_fr"]] %>%
+      dplyr::filter(indic %in% "prix", territoire %in% "Corse-du-Sud") %>%
+      dplyr::pull(dt_dep_cor),
+
+    pt_an_diff_fr_dpt2b <- tab_calculs[["terrains_depcor_compare_fr"]] %>%
+      dplyr::filter(indic %in% "prix", territoire %in% "Haute-Corse") %>%
+      dplyr::pull(dt_dep_cor),
+
+    # difference projet departements corses et france
+
+    pt_an_pjt_diff_cor_dpt2a <- tab_calculs[["terrains_depcor_compare_fr"]] %>%
+      dplyr::filter(indic %in% "cout_projet", territoire %in% "Corse-du-Sud") %>%
+      dplyr::pull(dt_dep_cor),
+
+    pt_an_pjt_diff_cor_dpt2b <- tab_calculs[["terrains_depcor_compare_fr"]] %>%
+      dplyr::filter(indic %in% "cout_projet", territoire %in% "Haute-Corse") %>%
+      dplyr::pull(dt_dep_cor),
+
+    # difference prix projet 2A et 2B
+
+
+    pt_an_pjt_diff_dpt2a_dpt2b <- tab_calculs[["terrains_depcor_compare_fr"]] %>%
+      dplyr::filter(indic %in% "cout_projet", territoire %in% c("Corse-du-Sud", "Haute-Corse")) %>%
+      dplyr::select(indic, territoire, value) %>%
+      tidyr::pivot_wider(names_from = territoire, values_from = value) %>%
+      dplyr::mutate(d_2a_2b = `Corse-du-Sud` - `Haute-Corse`,
+                    td_2a_2b = d_2a_2b / `Haute-Corse`) %>% dplyr::pull(td_2a_2b),
 
     # prix des terrains evolutions sur 1 an et depuis 2010
 
@@ -128,10 +164,12 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     # prix total des maisons
 
     pm_tot_an = tab_calculs[["maisons_an"]] %>%
-      dplyr::filter(territoire %in% "Corse", indic %in% "prix") %>% dplyr::pull(value),
+      dplyr::filter(territoire %in% "Corse", indic %in% "prix") %>%
+      dplyr::pull(value),
 
     pm_tot_an_prec = tab_calculs[["maisons_an"]] %>%
-      dplyr::filter(territoire %in% "Corse", indic %in% "prix") %>% dplyr::pull(value0),
+      dplyr::filter(territoire %in% "Corse", indic %in% "prix") %>%
+      dplyr::pull(value0),
 
     pm_tot_2010 = tab_calculs[["maisons_depuis2010"]] %>%
       dplyr::filter(
@@ -179,7 +217,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       stringr::str_glue(
         "Par rapport au prix moyen national, celui de la Haute-Corse est plus faible de xx% alors que la surface moyenne des terrains est plus forte alors que pour la Corse-du-Sud il est plus élevé (+xx%) mais cela est dû à la grande taille des terrains achetés."
       )  ,
-      "La part du montant de l'achat du terrain dans le cout total du projet suit la m\u00eeme tendance. Si le taux pour la Corse est proche de celui France entière, il y a de fortes disparités départementales, dues à la taille des terrains et au prix moyen au mètre carré. ",
+      "La part du montant de l'achat du terrain dans le cout total du projet suit la m\u00eame tendance. Si le taux pour la Corse est proche de celui France entière, il y a de fortes disparités départementales, dues à la taille des terrains et au prix moyen au mètre carré. ",
       stringr::str_glue(
         "Le montant moyen d'un projet est de xx\\% plus important en Corse-du-Sud qu'en Haute-Corse. Les montants moyens sont respectivement supérieurs de xx et xx% au montant moyen de la France."
       )
@@ -198,24 +236,24 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         "Le prix moyen au mètre carré a fortement augmenté entre {ls_valeurs[['annee_etude']]} et {ls_valeurs[['annee_etude']]} passant de {ls_valeurs[['annee_etude']]} à {ls_valeurs[['annee_etude']]} euros. "
       ),
       stringr::str_glue(
-        "Le prix moyen d’achat d’une maison a progressé dans le m\u00eeme temps de {ls_valeurs[['pm_tot_2010']]} à {ls_valeurs[['pm_tot_an']]} euros."
+        "Le prix moyen d’achat d’une maison a progressé dans le m\u00eame temps de {ls_valeurs[['pm_tot_2010']]} à {ls_valeurs[['pm_tot_an']]} euros."
       )
     ),
 
     # 3eme paragraphe
     "p2_bloc3_texte" = c(
-      "La classe d'\u00e2ge des moins de 30 ans ach\u00eete en moyenne les terrains les moins chers mais privilégie quand m\u00eeme une surface proche de la moyenne régionale. Du fait que la part de primo-accédant est particulièrement forte dans cette tranche d'age, le coût total du projet (maison+terrain) est aussi le moins important."   ,
+      "La classe d'\u00e2ge des moins de 30 ans ach\u00eate en moyenne les terrains les moins chers mais privilégie quand m\u00eame une surface proche de la moyenne régionale. Du fait que la part de primo-accédant est particulièrement forte dans cette tranche d'age, le coût total du projet (maison+terrain) est aussi le moins important."   ,
       "Comme attendu, plus le propriétaire est \u00e2gé, plus la superficie du terrain acheté et le coût du projet total est élevé (xx\\% par rapport à la moyenne régionale)."  ,
-      "Selon la catégorie socio-professionnelle de l'acheteur, le prix moyen du terrain varie de xx à xx euros du mètre carré, les prix les plus élevés concernent les retraités les artisans, commerçants, chefs d'entreprise et les cadres et professions intellectuelles supérieures. Cette dernière catégorie ach\u00eete aussi en moyenne les terrains les plus grands et chers.  ",
+      "Selon la catégorie socio-professionnelle de l'acheteur, le prix moyen du terrain varie de xx à xx euros du mètre carré, les prix les plus élevés concernent les retraités les artisans, commerçants, chefs d'entreprise et les cadres et professions intellectuelles supérieures. Cette dernière catégorie ach\u00eate aussi en moyenne les terrains les plus grands et chers.  ",
       "Les projet concernent très majoritairement la construction de résidences principales.",
       "L'achat des terrains non viabilisés porte sur des parcelles de plus grande taille (+xx%) avec un coût de projet plus important (+xx%). Leur prix au mètre carré est normalement plus faible (-xx%)."
     ),
 
     # 4eme paragraphe
     "p3_bloc2_texte" = c(
-      "La classe d'\u00e2ge des moins de 30 ans ach\u00eete en moyenne les terrains les moins chers mais privilégie quand m\u00eeme une surface proche de la moyenne régionale. Du fait que la part de primo-accédant est particulièrement forte dans cette tranche d'age, le coût total du projet (maison+terrain) est aussi le moins important."   ,
+      "La classe d'\u00e2ge des moins de 30 ans ach\u00eate en moyenne les terrains les moins chers mais privilégie quand m\u00eame une surface proche de la moyenne régionale. Du fait que la part de primo-accédant est particulièrement forte dans cette tranche d'age, le coût total du projet (maison+terrain) est aussi le moins important."   ,
       "Comme attendu, plus le propriétaire est \u00e2gé, plus la superficie du terrain acheté et le coût du projet total est élevé (xx\\% par rapport à la moyenne régionale)."  ,
-      "Selon la catégorie socio-professionnelle de l'acheteur, le prix moyen du terrain varie de xx à xx euros du mètre carré, les prix les plus élevés concernent les retraités les artisans, commerçants, chefs d'entreprise et les cadres et professions intellectuelles supérieures. Cette dernière catégorie ach\u00eete aussi en moyenne les terrains les plus grands et chers.  ",
+      "Selon la catégorie socio-professionnelle de l'acheteur, le prix moyen du terrain varie de xx à xx euros du mètre carré, les prix les plus élevés concernent les retraités les artisans, commerçants, chefs d'entreprise et les cadres et professions intellectuelles supérieures. Cette dernière catégorie ach\u00eate aussi en moyenne les terrains les plus grands et chers.  ",
       "Les projet concernent très majoritairement la construction de résidences principales.",
       "L'achat des terrains non viabilisés porte sur des parcelles de plus grande taille (+xx \\%) avec un coût de projet plus important (+xx\\%). Leur prix au mètre carré est normalement plus faible (-xx\\%)."
     )

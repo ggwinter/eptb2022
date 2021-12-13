@@ -1,0 +1,162 @@
+---
+title: "Liser_moi"
+author: "G.Winterstein"
+date: "The Date"
+output: output_format
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+## Creer les repertoires de travail
+
+Cree les repertoires 1_script, 2_data, 3_tables, 4_resultats, 5_publication
+
+```{r fn1, echo=FALSE}
+
+fn01_cree_repertoires()
+
+```
+
+## Choix année étude
+
+Choix de l anne d etude par defaut 2019
+
+```{r fn2, echo=FALSE}
+
+fn02_choix_annee_etude(2018)-> ls_dates
+
+```
+
+## Import des fichiers data
+
+```{r import}
+fn03_import_tab_beyond() -> ls_beyond
+fn04_import_tableaux_geokit()-> ls_import
+```
+
+## Traitement des données
+
+### Traitement des donnes pour les terrains
+
+```{r tab_terrains}
+
+fn05_transforme_tab_gk_filtre_frregdep()-> tli_regdep_filtre
+
+fn07_cree_doc_frcordep_filtre()-> doc_frcordep_filtre
+
+fn09_extrait_tab_filtre_modalites()-> tli_reg_indics_filtre
+
+fn10_tab_filtre_verifie_secstat()-> tli_reg_indics_filtre
+
+fn11_tab_filtre_applique_secstat()-> tab2_terrains
+
+```
+
+### Traitement des donnees pour les maisons
+
+```{r tab_maisons}
+
+fn12_transforme_tab_gk_ssfiltre_frregdep()-> tli_regdep_ssfiltre
+
+fn13_cree_doc_frcordep_ssfiltre()-> doc_frcordep_ssfiltre
+
+fn15_extrait_tab_ssfiltre_modalites()-> tli_reg_indics_ssfiltre
+
+fn16_tab_ssfiltre_verifie_secstat()-> tli_reg_indics_ssfiltre
+
+fn17_tab_ssfiltre_applique_secstat()-> tab4_maisons
+
+```
+
+### Traitement des donnees pour les maisons et terrains
+
+```{r tab_terrains_maisons}
+fn18_calcul_evolution_maisons_terrains()-> tli_frcordepcor_filtre_ssfiltre
+
+fn19_calcul_evolution_maisons_terrains_mod(tli_frcordepcor_filtre_ssfiltre$evol_an)-> tli_frcordepcor_filtre_ssfiltre$evol_an
+```
+
+## Cartes pour les terrains par région et graphe pour les régions
+
+```{r cartograph}
+
+fn30_carto_terrains_indics(tli_regdep_filtre[["filtre_reg"]])-> plot_ls_carto
+
+# fn31_carte_maisons(tli_regdep_ssfiltre[["filtre_reg"]])
+
+fn32_graphiques_terrains()-> ls_cowplot
+
+fn33_graphiques_maisons()-> ls_cowplot
+
+fn33b_cowplot_maison_terrain()
+
+fn34_autres_graphiques_terrains()
+
+fn35_autres_graphiques_maisons()
+
+
+
+
+
+
+
+```
+
+## tableaux finaux
+
+```{r tabfin}
+
+fn20_mef_tableaux_plaquette()-> resultats
+
+fn21_enregistre_tableaux()-> tab_calculs
+
+résultats2 <- resultats
+
+
+
+
+```
+
+## La plaquette 
+
+### Plaquette création du nouveau texte
+
+```{r newtxt}
+fn40_scr_lit_nouveau_texte()-> ls_newtxt
+
+```
+
+### Plaquette lecture texte du modele
+
+```{r}
+n41_lit_le_modele()-> t_parametres
+
+```
+
+### Plaquette remplace le texte ancien par le nouveau
+
+```{r}
+fn42_remplace_txt_paragraphe()
+
+fn42b_remplace_txt_titre()
+
+```
+
+Plaquette tableaux
+
+```{r}
+
+fn43_lit_contenu_tableaux() -> ls_tableaux0
+
+fn44_tableaux_cellule_a_remplacer()-> toto
+
+fn45_tableaux_remplace_corps_tableau()
+
+fn46_tableaux_met_en_forme_champs()
+
+fn47_tableaux_met_en_forme_ssindicateurs()
+
+```

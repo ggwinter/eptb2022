@@ -37,13 +37,14 @@ fn20_mef_tableaux_plaquette <-
 
     tab1_terrains_cordepfr <- data$doc_frcordep_filtre %>%
       dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
-      dplyr::select(-annee) # %>%
-      # dplyr::mutate_at(ind_dec, ~ format_dec(.x)) %>%
-      # dplyr::mutate_at(ind_pourcent, ~ format_pourcent(.x))
+      dplyr::select(-annee)
 
 
     tab1_terrains_cordepfr %>%
       dplyr::select(-type) %>%
+
+      dplyr::mutate_at(ind_dec, ~ format_dec(.x)) %>%
+      dplyr::mutate_at(ind_pourcent, ~ format_pourcent(.x))%>%
       dplyr::rename(
         "Territoire" = "territoire",
         "Part" = "part",
@@ -69,10 +70,8 @@ fn20_mef_tableaux_plaquette <-
     # H2 Tab 2 Terrains corse pour 4 indicateurs --------
 
 
-    tab2_terrains_4indics <- data$tab2_terrains %>%
+    tab2_terrains_4indics <- tab2_terrains %>%
       dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
-      # dplyr::mutate_at(ind_dec, ~ format_dec(.x)) %>%
-      # dplyr::mutate_at(ind_pourcent, ~ format_pourcent(.x)) %>%
       dplyr::arrange(indic, indic_cat) %>%
       tidyr::separate(
         indic_cat,
@@ -91,7 +90,13 @@ fn20_mef_tableaux_plaquette <-
             "Erreur d'analyse"
 
         )
-      ) %>%
+      )
+
+    resultats[["tab2"]] <- tab2_terrains_4indics %>%
+      dplyr::mutate_at(ind_dec, ~ format_dec(.x)) %>%
+      dplyr::mutate_at(ind_pourcent, ~ format_pourcent(.x)) %>%
+      dplyr::mutate_at(ind_pourcent,
+                       ~ stringr::str_replace(.x, "NA %", "NA")) %>%
       dplyr::rename(
         c(
           "Indicateur" = "indic_cat",
@@ -103,11 +108,7 @@ fn20_mef_tableaux_plaquette <-
           "Co\u00fbt du projet" = "cout_projet"
         )
       ) %>%
-      dplyr::mutate_at(ind_part,
-                       ~ stringr::str_replace(.x, "NA %", "NA"))
-
-    resultats[["tab2"]] <-
-      tab2_terrains_4indics %>% dplyr::select(-c(annee, indic, indic_cat_cd))
+      dplyr::select(-c(annee, indic, indic_cat_cd))
 
 
 
@@ -117,14 +118,14 @@ fn20_mef_tableaux_plaquette <-
     ind_part = c("Part")
 
 
-    tab3_maisons_cordepfr <- data$doc_frcordep_ssfiltre %>%
+    tab3_maisons_cordepfr <- doc_frcordep_ssfiltre %>%
       dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
-      dplyr::select(-annee) %>%
-      dplyr::mutate_at(ind_dec, ~ format_dec(.x)) %>%
-      dplyr::mutate_at(ind_pourcent, ~ format_pourcent(.x))
+      dplyr::select(-annee)
 
     tab3_maisons_cordepfr %>%
-      dplyr::select(-type) %>%
+      dplyr::select(-type)%>%
+      dplyr::mutate_at(ind_dec, ~ format_dec(.x)) %>%
+      dplyr::mutate_at(ind_pourcent, ~ format_pourcent(.x))%>%
       dplyr::rename(
         "Territoire" = "territoire",
         "Part" = "part",
@@ -148,10 +149,8 @@ fn20_mef_tableaux_plaquette <-
 
     #  H4 Tab 4 maisons corse pour 4 indicateurs
 
-    tab4_maisons_3indics <- data$tab4_maisons %>%
+    tab4_maisons_3indics <- tab4_maisons %>%
       dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
-      dplyr::mutate_at(ind_dec, ~ format_dec(.x)) %>%
-      dplyr::mutate_at(ind_pourcent, ~ format_pourcent(.x)) %>%
       dplyr::arrange(indic, indic_cat) %>%
       dplyr::filter(indic %in% c("chauffage", "moe", "finition")) %>%
       tidyr::separate(
@@ -170,7 +169,12 @@ fn20_mef_tableaux_plaquette <-
             "Erreur d'analyse"
 
         )
-      )  %>%
+      )
+
+
+    tab4_maisons_3indics %>%
+      dplyr::mutate_at(ind_dec, ~ format_dec(.x)) %>%
+      dplyr::mutate_at(ind_pourcent, ~ format_pourcent(.x)) %>%
       dplyr::rename(
         "Indicateur" = "indic_cat",
         "Part" = "part",
@@ -179,63 +183,8 @@ fn20_mef_tableaux_plaquette <-
         "Prix de la maison" = "prix"
       ) %>%
       dplyr::mutate_at(ind_part,
-                       ~ stringr::str_replace(.x, "NA %", "NA"))
-
-
-    resultats[["tab4"]] <-
-      tab4_maisons_3indics %>% dplyr::select(-c(annee, indic, indic_cat_cd))
-
-    # # H1 Tab 1_raw Terrains corse, departements, FR ---------
-    # #
-    # ind_dec = c("prix_m2", "prix", "surf_m2", "cout_projet")
-    # ind_pourcent = c("part", "part_projet")
-    # ind_part = c("Part")
-    #
-    # data$doc_frcordep_filtre %>%
-    #   dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
-    #   dplyr::select(-annee) %>%
-    #   dplyr::select(-type) -> resultats[["tab1_raw"]]
-    #
-    # # H2 Tab 2_raw Terrains corse pour 4 indicateurs --------
-    #
-    # data$tab2_terrains %>%
-    #   dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
-    #   dplyr::arrange(indic, indic_cat) %>%
-    #   tidyr::separate(
-    #     indic_cat,
-    #     into = c("indic_cat_cd", "indic_cat"),
-    #     sep = " : ",
-    #     remove = TRUE,
-    #     convert = TRUE
-    #   )%>% dplyr::select(-c(annee, indic, indic_cat_cd))-> resultats[["tab2_raw"]]
-    #
-    # #  H3 Tab 3_raw maisons par territoires --------
-    # ind_dec = c("prix_m2", "prix")
-    # ind_pourcent = c("part")
-    # ind_part = c("Part")
-    #
-    #
-    # data$doc_frcordep_ssfiltre %>%
-    #   dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
-    #   dplyr::select(-annee) %>%
-    #   dplyr::select(-type) -> resultats[["tab3_raw"]]
-    #
-    #
-    # #  H4 Tab 4_raw maisons corse pour 4 indicateurs
-    #
-    # data$tab4_maisons %>%
-    #   dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
-    #   dplyr::arrange(indic, indic_cat) %>%
-    #   dplyr::filter(indic %in% c("chauffage", "moe", "finition")) %>%
-    #   tidyr::separate(
-    #     indic_cat,
-    #     into = c("indic_cat_cd", "indic_cat"),
-    #     sep = " : ",
-    #     remove = TRUE,
-    #     convert = TRUE
-    #   ) %>%
-    #   dplyr::select(-c(annee, indic, indic_cat_cd))-> resultats[["tab4_raw"]]
-
+                       ~ stringr::str_replace(.x, "NA %", "NA")) %>%
+      dplyr::select(-c(annee, indic, indic_cat_cd)) -> resultats[["tab4"]]
 
 
     # Sauvez les fichiers en RDS et xlsx
