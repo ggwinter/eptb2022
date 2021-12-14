@@ -4,7 +4,7 @@
 \alias{fn42_remplace_txt_paragraphe}
 \title{Scibus : texte, remplace le texte du paragraphe}
 \usage{
-fn42_remplace_txt_paragraphe(data = t_parametres)
+fn42_remplace_txt_paragraphe(data = ls_modele$t_parametres)
 }
 \arguments{
 \item{data}{une tibble avec les colonnes num_objet, par, lgn}
