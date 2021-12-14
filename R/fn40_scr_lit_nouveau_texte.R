@@ -219,7 +219,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       )  ,
       "La part du montant de l'achat du terrain dans le cout total du projet suit la m\u00eame tendance. Si le taux pour la Corse est proche de celui France entière, il y a de fortes disparités départementales, dues à la taille des terrains et au prix moyen au mètre carré. ",
       stringr::str_glue(
-        "Le montant moyen d'un projet est de xx\\% plus important en Corse-du-Sud qu'en Haute-Corse. Les montants moyens sont respectivement supérieurs de xx et xx% au montant moyen de la France."
+        "Le montant moyen d'un projet est de {ls_valeurs[['pt_an_pjt_diff_dpt2a_dpt2b']]} plus important en Corse-du-Sud qu'en Haute-Corse. Les montants moyens sont respectivement supérieurs de xx et xx% au montant moyen de la France."
       )
     ),
 
