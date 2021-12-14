@@ -119,8 +119,9 @@ fn03_import_tab_beyond <- function(x  = "2_data") {
 
     purrr::map(
       fich_beyond,
-      ~ readr::read_csv2(
+      ~ readr::read_delim(
         file.path("2_data", .x),
+        delim = ";",
         locale = readr::locale("fr", encoding = "latin1"),
         skip = 3,
         col_names = FALSE,
