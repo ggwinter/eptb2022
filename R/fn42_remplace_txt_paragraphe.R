@@ -10,7 +10,7 @@
 #' @importFrom dplyr pull
 #' @export
 #'
-fn42_remplace_txt_paragraphe <- function(data = t_parametres) {
+fn42_remplace_txt_paragraphe <- function(data = ls_modele$t_parametres) {
   fn_remplace_paragraphe_nb <-
     function(num_objet = 19,
              par = "p1_bloc6_texte",
