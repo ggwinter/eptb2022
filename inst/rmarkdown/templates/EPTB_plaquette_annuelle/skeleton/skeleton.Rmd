@@ -24,7 +24,7 @@ print("Les répertoires ont été créés dans le projet")
 
 ## Choix année étude
 
-Choix de l anne d etude par defaut 2019
+Choix de l année d étude par défaut 2019
 
 ```{r fn2, echo=FALSE}
 
@@ -43,7 +43,7 @@ if(exists("ls_beyond")==TRUE&exists("ls_beyond")==TRUE)print("Les données ont �
 
 ## Traitement des données
 
-### Traitement des données pour les terrains
+### Pour les terrains
 
 ```{r tab_terrains, echo=FALSE}
 
@@ -59,7 +59,7 @@ fn11_tab_filtre_applique_secstat()-> tab2_terrains
 print("Données pour les terrains traitées")
 ```
 
-### Traitement des données pour les maisons
+### Pour les maisons
 
 ```{r tab_maisons, echo=FALSE}
 
@@ -75,7 +75,7 @@ fn17_tab_ssfiltre_applique_secstat()-> tab4_maisons
 print("Données pour les maisons traitées")
 ```
 
-### Traitement des données pour les maisons et terrains
+### Pour les maisons et terrains
 
 ```{r tab_terrains_maisons, echo=FALSE}
 fn18_calcul_evolution_maisons_terrains()-> tli_frcordepcor_filtre_ssfiltre
