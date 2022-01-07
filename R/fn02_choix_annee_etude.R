@@ -14,7 +14,7 @@ fn02_choix_annee_etude <- function(x = 2019) {
 
   list(
     'annee_etude' = as.character(x),
-    'annee_prec' = as.character(x- 1L),
+    'annee_prec' = as.character(x - 1L),
     'annee_debut' = "2010"
   )-> ls_dates
   return(ls_dates)
