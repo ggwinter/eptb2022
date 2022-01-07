@@ -126,22 +126,52 @@ fn03_import_tab_beyond <- function(x  = "2_data") {
         skip = 3,
         col_names = FALSE,
         show_col_types = FALSE
-      ) %>% purrr::set_names(
-        c(
-          "annee",
-          "reg",
-          "nb",
-          "prix_m2",
-          "prix_m2q1",
-          "prix_m2q2",
-          "prix_m2q3",
-          "surf_m2",
-          "prix"
-        )
-      ) %>% dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
+      )) -> ls_beyond
+
+    purrr::map(ls_beyond,~purrr::map_chr(.x, class)) %>%
+      purrr::map(., ~stringr::str_which(.x, "character"))-> ls_test
+
+    purrr::map2(ls_beyond, ls_test,
+                ~ if (.y == 1) {
+                  .x %>%
+                    purrr::set_names(
+                      c(
+                        "reg",
+                        "annee",
+                        "nb",
+                        "prix_m2",
+                        "prix_m2q1",
+                        "prix_m2q2",
+                        "prix_m2q3",
+                        "surf_m2",
+                        "prix"
+                      )
+                    )
+                } else{
+                  .x %>%
+                    purrr::set_names(
+                      c(
+                        "annee",
+                        "reg",
+                        "nb",
+                        "prix_m2",
+                        "prix_m2q1",
+                        "prix_m2q2",
+                        "prix_m2q3",
+                        "surf_m2",
+                        "prix"
+                      )
+                    )
+                }) -> ls_beyond
+
+    purrr::map(
+      ls_beyond,
+      ~ .x %>%
+        dplyr::filter(annee %in% ls_dates[["annee_etude"]]) %>%
         dplyr::left_join(t_noms_reg, by = 'reg') %>%
         dplyr::select(annee, reg_lib, nb:prix)
     ) -> ls_beyond
+    rm(ls_test)
 
 
     purrr::map(
