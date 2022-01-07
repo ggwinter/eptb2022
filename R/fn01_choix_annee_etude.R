@@ -5,7 +5,7 @@
 #'
 #' @param annee un vecteur numerique de longueur 4 caracteres
 #' @examples
-#' fn02_choix_annee_etude(2018)
+#' fn01_choix_annee_etude(2018)
 #'
 #' @export
 fn01_choix_annee_etude <- function(annee = 2019) {
