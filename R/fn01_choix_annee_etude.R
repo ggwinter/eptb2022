@@ -8,7 +8,7 @@
 #' fn02_choix_annee_etude(2018)
 #'
 #' @export
-fn02_choix_annee_etude <- function(annee = 2019) {
+fn01_choix_annee_etude <- function(annee = 2019) {
   stopifnot(is.numeric(annee))
   stopifnot(nchar(annee)== 4)
 
