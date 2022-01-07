@@ -24,8 +24,8 @@ fn04_import_tableaux_geokit <- function(x  = "2_data") {
 
   ls_import <- list()
   # import des fichiers beyond
-  if (file.exists(here::here("2_data", "EPTB_aggrege.xlsx"))) {
-    path_eptb <- here::here("2_data", "EPTB_aggrege.xlsx")
+  if (file.exists(here::here("2_data", ls_dates$annee_etude, "EPTB_aggrege.xlsx"))) {
+    path_eptb <- here::here("2_data", ls_dates$annee_etude, "EPTB_aggrege.xlsx")
 
     ls_import[["path_eptb"]] <- path_eptb
 
