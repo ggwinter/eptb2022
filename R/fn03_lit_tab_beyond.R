@@ -107,7 +107,7 @@ fn03_import_tab_beyond <- function(x  = "2_data") {
   }
 
   # import des fichiers beyond
-  list.files(here::here(x), pattern = "csv") -> fich_beyond
+  list.files(here::here(x, ls_dates[["annee_etude"]]), pattern = "csv") -> fich_beyond
   if (length(fich_beyond) == 2) {
     fich_beyond %>% stringr::str_replace(".csv", "") %>%
       stringr::str_replace("(?<=eptb-d[:digit:]).*", "") %>%
