@@ -11,7 +11,7 @@
 #' @importFrom dplyr rename
 #' @importFrom dplyr left_join
 #' @importFrom purrr map_dfr
-#' @importFromd plyr pull
+#' @importFrom dplyr pull
 #' @export
 #'
 fn21_enregistre_tableaux <- function(x = ls_dates$annee_etude) {

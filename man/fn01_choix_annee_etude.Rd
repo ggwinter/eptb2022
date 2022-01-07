@@ -14,6 +14,6 @@ La fonction enregistre dans une liste l'annee d'etude et calcule l'annee
 precedente au format texte
 }
 \examples{
-fn02_choix_annee_etude(2018)
+fn01_choix_annee_etude(2018)
 
 }
