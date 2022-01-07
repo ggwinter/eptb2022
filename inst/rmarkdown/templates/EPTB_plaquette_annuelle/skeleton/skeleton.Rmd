@@ -11,26 +11,27 @@ library(eptb2022)
 
 ```
 
-## Creer les repertoires de travail
-
-Cree les repertoires 1_script, 2_data, 3_tables, 4_resultats, 5_publication
-
-```{r fn1, echo=FALSE}
-
-fn01_cree_repertoires()
-print("Les répertoires ont été créés dans le projet")
-
-```
-
 ## Choix année étude
 
 Choix de l année d étude par défaut 2019
 
 ```{r fn2, echo=FALSE}
 
-fn02_choix_annee_etude(2018)-> ls_dates
+fn01_choix_annee_etude(2018)-> ls_dates
 print(paste0("L'année d'étude est ", ls_dates$annee_etude))
 ```
+
+## Creer les repertoires de travail
+
+Cree les repertoires 1_script, 2_data, 3_tables, 4_resultats, 5_publication
+
+```{r fn1, echo=FALSE}
+
+fn02_cree_repertoires()
+print("Les répertoires ont été créés dans le projet")
+
+```
+
 
 ## Import des fichiers data
 
