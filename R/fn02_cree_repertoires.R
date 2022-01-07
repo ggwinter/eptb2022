@@ -8,6 +8,7 @@
 fn01_cree_repertoires <-
   function(new_rep = c('1_scripts',
                        '2_data',
+                       paste('2_data', ls_dates$annee_etude, sep ='/'),
                        '3_tables',
                        '4_resultats',
                        '5_publication')) {
