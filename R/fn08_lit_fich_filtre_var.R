@@ -17,7 +17,7 @@
 #' @export
 #'
 fn08_lit_fich_filtre_var <- function(x = "filtre_csp") {
-  tab <- readxl::read_excel(path_eptb, x)
+  tab <- readxl::read_excel(ls_import[["path_eptb"]], x)
   champs0 <- names(tab)
   champs <-
     ls_import[["T_onglets_champs"]]$champs[which(ls_import[["T_onglets_champs"]]$champs0 %in% champs0 &

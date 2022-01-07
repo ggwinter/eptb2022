@@ -29,12 +29,12 @@ fn04_import_tableaux_geokit <- function(x  = "2_data") {
 
     ls_import[["path_eptb"]] <- path_eptb
 
-    ongl_fich1 <- readxl::excel_sheets(path_eptb)
+    ongl_fich1 <- readxl::excel_sheets(ls_import[["path_eptb"]])
 
 
     # x <- 1
     lit_champs1 <- function(x) {
-      tab <- readxl::read_xlsx(path = path_eptb,
+      tab <- readxl::read_xlsx(path = ls_import[["path_eptb"]],
                                sheet = x,
                                n_max = 1)
       chps0 <-

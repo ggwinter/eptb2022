@@ -20,7 +20,7 @@ fn05_transforme_tab_gk_filtre_frregdep <-
   function(fich_frregdep_filtre = c("filtre_fr", "filtre_reg", "filtre_dep")) {
     fn_lit_fich_depreg_filtre <- function(x) {
       tab <-
-        readxl::read_excel(path_eptb, x)
+        readxl::read_excel(ls_import[["path_eptb"]], x)
       champs0 <- names(tab)
       champs <-
         ls_import[["T_onglets_champs"]]$champs[which(ls_import[["T_onglets_champs"]]$champs0 %in% champs0 &
