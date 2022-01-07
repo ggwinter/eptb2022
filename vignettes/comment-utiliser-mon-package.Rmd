@@ -24,7 +24,7 @@ Cree les repertoires 1_script, 2_data, 3_tables, 4_resultats, 5_publication
 
 ```{r fn1}
 
-fn01_cree_repertoires()
+fn01_choix_annee_etude(2018)-> ls_dates
 
 ```
 
@@ -34,6 +34,6 @@ Choix de l anne d etude par defaut 2019
 
 ```{r fn2}
 
-fn02_choix_annee_etude(2018)-> ls_dates
+fn02_cree_repertoires()
 
 ```
