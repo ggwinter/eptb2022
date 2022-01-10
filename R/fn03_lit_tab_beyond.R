@@ -82,22 +82,22 @@ fn03_import_tab_beyond <- function(x  = "2_data") {
 
     if (exists(file.path(getwd(), "3_tables", "t_noms_reg.csv")) == FALSE) {
       t_noms_reg <- tibble::tribble(
-        ~ reg_cd,        ~ reg_lib,        ~ reg,
-        11L,        "\u00cele-de-France",        "ILE-DE-FRANCE",
-        24L,        "Centre-Val de Loire",        "CENTRE-VAL DE LOIRE",
-        27L,        "Bourgogne-Franche-Comt\u00e9",        "BOURGOGNE-FRANCHE-COMTE",
-        28L,        "Normandie",        "NORMANDIE",
-        32L,        "Hauts-de-France",        "NORD-PAS-DE-CALAIS-PICARDIE",
-        44L,        "Grand Est",        "ALSACE-CHAMPAGNE-ARDENNE-LORRAINE",
-        52L,        "Pays de la Loire",        "PAYS DE LA LOIRE",
-        53L,        "Bretagne",        "BRETAGNE",
-        75L,        "Nouvelle-Aquitaine",        "AQUITAINE-LIMOUSIN-POITOU-CHARENTES",
-        76L,        "Occitanie",        "LANGUEDOC-ROUSSILLON-MIDI-PYRENEES",
-        84L,        "Auvergne-Rh\u00f4ne-Alpes",        "AUVERGNE-RHONE-ALPES",
-        93L,        "Provence-Alpes-C\u00f4te d'Azur",        "PROVENCE-ALPES-COTE D'AZUR",
-        94L,        "Corse",        "CORSE",
-        00L,        "DOM",        "DOM",
-        999L,        "France",        "FRANCE ENTIERE"
+        ~ reg_cd,        ~ reg_lib,                                           ~ reg,
+        11L,        "\u00cele-de-France",                           "ILE-DE-FRANCE",
+        24L,        "Centre-Val de Loire",                    "CENTRE-VAL DE LOIRE",
+        27L,        "Bourgogne-Franche-Comt\u00e9",       "BOURGOGNE-FRANCHE-COMTE",
+        28L,        "Normandie",                                        "NORMANDIE",
+        32L,        "Hauts-de-France",                "NORD-PAS-DE-CALAIS-PICARDIE",
+        44L,        "Grand Est",                "ALSACE-CHAMPAGNE-ARDENNE-LORRAINE",
+        52L,        "Pays de la Loire",                          "PAYS DE LA LOIRE",
+        53L,        "Bretagne",                                          "BRETAGNE",
+        75L,        "Nouvelle-Aquitaine",     "AQUITAINE-LIMOUSIN-POITOU-CHARENTES",
+        76L,        "Occitanie",               "LANGUEDOC-ROUSSILLON-MIDI-PYRENEES",
+        84L,        "Auvergne-Rh\u00f4ne-Alpes",             "AUVERGNE-RHONE-ALPES",
+        93L,        "Provence-Alpes-C\u00f4te d'Azur", "PROVENCE-ALPES-COTE D'AZUR",
+        94L,        "Corse",                                                "CORSE",
+        00L,        "DOM",                                                    "DOM",
+        999L,       "France",                                      "FRANCE ENTIERE"
       )
 
       readr::write_csv(t_noms_reg,
