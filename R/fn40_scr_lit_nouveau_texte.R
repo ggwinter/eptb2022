@@ -19,60 +19,9 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     annee_precedente = resultats[["annee_precedente"]],
 
-    # prix des terrains
+    # Projets
 
-    # terrains prix  m2 an N
-
-    pt_m2_an = tab_calculs[["terrains_an"]] %>%
-      dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>%
-      dplyr::pull(value),
-
-    # terrains prix  m2 an N-1
-    #
-    pt_m2_an_prec = tab_calculs[["terrains_an"]] %>%
-      dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>%
-      dplyr::pull(value0),
-
-    # terrains prix  m2 an N Q1
-    #
-    pt_m2_an_q1 = tab_calculs[["terrains_autres_reg"]] %>%
-      dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2q1),
-
-    # terrains prix  m2 an N m2 Q2
-    #
-    pt_m2_an_q2 = tab_calculs[["terrains_autres_reg"]] %>%
-      dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2q2),
-
-    # terrains prix  m2 an N m2 Q3
-    #
-    pt_m2_an_q3 = tab_calculs[["terrains_autres_reg"]] %>%
-      dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2q3),
-
-    # terrains difference prix_m2 departements corses et france
-    # 2A
-    pt_an_m2_diff_fr_dpt2a <-
-      tab_calculs[["terrains_depcor_compare_fr"]] %>%
-      dplyr::filter(indic %in% "prix_m2", territoire %in% "Corse-du-Sud") %>%
-      dplyr::pull(dt_dep_cor),
-    # 2B
-    pt_an_m2_diff_fr_dpt2b <-
-      tab_calculs[["terrains_depcor_compare_fr"]] %>%
-      dplyr::filter(indic %in% "prix_m2", territoire %in% "Haute-Corse") %>%
-      dplyr::pull(dt_dep_cor),
-
-    # terrains difference prix total departements corses et france
-    # 2A
-    pt_an_diff_fr_dpt2a <-
-      tab_calculs[["terrains_depcor_compare_fr"]] %>%
-      dplyr::filter(indic %in% "prix", territoire %in% "Corse-du-Sud") %>%
-      dplyr::pull(dt_dep_cor),
-    # 2B
-    pt_an_diff_fr_dpt2b <-
-      tab_calculs[["terrains_depcor_compare_fr"]] %>%
-      dplyr::filter(indic %in% "prix", territoire %in% "Haute-Corse") %>%
-      dplyr::pull(dt_dep_cor),
-
-    # Projet difference prix departements corses et france
+    # Projets difference prix departements corses et france
     # 2A
     pt_an_pjt_diff_cor_dpt2a <-
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
@@ -84,7 +33,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       dplyr::filter(indic %in% "cout_projet", territoire %in% "Haute-Corse") %>%
       dplyr::pull(dt_dep_cor),
 
-    # difference prix projet 2A et 2B
+    # Projets difference prix 2A et 2B
 
     pt_an_pjt_diff_dpt2a_dpt2b <-
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
@@ -99,15 +48,81 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         td_2a_2b = d_2a_2b / `Haute-Corse`
       ) %>% dplyr::pull(td_2a_2b),
 
+
+    # Terrains prix
+
+    # Terrains prix  m2 an N
+
+    pt_m2_an = tab_calculs[["terrains_an"]] %>%
+      dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>%
+      dplyr::pull(value),
+
+    # Terrains prix  m2 an N-1
+    #
+    pt_m2_an_prec = tab_calculs[["terrains_an"]] %>%
+      dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>%
+      dplyr::pull(value0),
+
+    # Terrains prix  m2 an N Q1
+    #
+    pt_m2_an_q1 = tab_calculs[["terrains_autres_reg"]] %>%
+      dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2q1),
+
+    # Terrains prix  m2 an N m2 Q2
+    #
+    pt_m2_an_q2 = tab_calculs[["terrains_autres_reg"]] %>%
+      dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2q2),
+
+    # Terrains prix  m2 an N m2 Q3
+    #
+    pt_m2_an_q3 = tab_calculs[["terrains_autres_reg"]] %>%
+      dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2q3),
+
+
+    # Terrains difference prix_m2 departements corses et france
+
+    # 2A
+    pt_an_m2_diff_fr_dpt2a <-
+      tab_calculs[["terrains_depcor_compare_fr"]] %>%
+      dplyr::filter(indic %in% "prix_m2", territoire %in% "Corse-du-Sud") %>%
+      dplyr::pull(dt_dep_cor),
+
+    # 2B
+    pt_an_m2_diff_fr_dpt2b <-
+      tab_calculs[["terrains_depcor_compare_fr"]] %>%
+      dplyr::filter(indic %in% "prix_m2", territoire %in% "Haute-Corse") %>%
+      dplyr::pull(dt_dep_cor),
+
+
+    # Terrains difference prix total departements corses et france
+
+    # 2A
+    pt_an_diff_fr_dpt2a <-
+      tab_calculs[["terrains_depcor_compare_fr"]] %>%
+      dplyr::filter(indic %in% "prix", territoire %in% "Corse-du-Sud") %>%
+      dplyr::pull(dt_dep_cor),
+
+    # 2B
+    pt_an_diff_fr_dpt2b <-
+      tab_calculs[["terrains_depcor_compare_fr"]] %>%
+      dplyr::filter(indic %in% "prix", territoire %in% "Haute-Corse") %>%
+      dplyr::pull(dt_dep_cor),
+
+    # Terrains prix m2 classement corse
+    #
+    pt_m2_an_q2 = tab_calculs[["terrains_autres_reg_clt"]] %>%
+      dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2),
+
+
     # Terrains prix evolutions sur 1 an et depuis 2010
 
-    # terrains tx diff prix m2 an N an N-1
+    # Terrains tx diff prix m2 an N an N-1
     #
-    pt_m2_evol_1an = tab_calculs[["terrains_an"]] %>%
+    pt_m2_an_corse_clt = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>%
       dplyr::pull(taux),
 
-    # terrains tx diff prix m2 an N an 2010
+    # Terrains tx diff prix m2 an N an 2010
     #
     pt_m2_evol_dep2010 = tab_calculs[["terrains_depuis2010"]] %>%
       dplyr::filter(
@@ -119,25 +134,25 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Terrains surfaces
 
-    # terrains surface m2 an N
+    # Terrains surface m2 an N
     #
     st_m2_an = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "surf_m2") %>%
       dplyr::pull(value),
 
-    # terrains surface m2 an N-1
+    # Terrains surface m2 an N-1
     #
     st_m2_an_prec = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "surf_m2") %>%
       dplyr::pull(value0),
 
-    # terrains surface m2 taux diff an N an N-1
+    # Terrains surface m2 taux diff an N an N-1
     #
     st_m2_evol_1an = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "surf_m2") %>%
       dplyr::pull(taux) %>% round(., 1),
 
-    # terrains surface m2 taux diff an N an 2010
+    # Terrains surface m2 taux diff an N an 2010
     #
     st_m2_evol_dep2010 = tab_calculs[["terrains_depuis2010"]] %>%
       dplyr::filter(
@@ -261,7 +276,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         "En {ls_valeurs[['annee_etude']]}, le mètre carré de terrain s'est vendu en moyenne à {ls_valeurs[['pt_m2_an']]} euros soit une hausse annuelle de {ls_valeurs[['pt_m2_evol_1an']]} % et de {ls_valeurs[['pt_m2_evol_dep2010']]} % depuis 2010."
       ),
       stringr::str_glue(
-        "La Corse se situe au {ls_valeurs[['annee_etude']]} rang parmi les 13 régions métropolitaines."
+        "La Corse se situe au {ls_valeurs[['pt_m2_an_corse_clt']]} rang parmi les 13 régions métropolitaines."
       ),
       "Le prix moyen au mètre carré des terrains achetés masque des disparités liées à la situation et à la taille de ceux-ci :",
       stringr::str_glue(
@@ -273,9 +288,9 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         "La superficie moyenne des terrains achetés dans l\'année est de {ls_valeurs[['st_m2_an']]} m\u00b2, surface en baisse de {ls_valeurs[['st_m2_evol_1an']]} % par rapport à {ls_valeurs[['annee_precedente']]} ({ls_valeurs[['st_m2_evol_dep2010']]} % avec 2010) mais avec des terrains beaucoup plus grands en Corse-du-Sud qu'en Haute Corse. "
       ),
       stringr::str_glue(
-        "Par rapport au prix moyen national, celui de la Haute-Corse est plus faible de xx% alors que la surface moyenne des terrains est plus forte alors que pour la Corse-du-Sud il est plus élevé (+xx%) mais cela est dû à la grande taille des terrains achetés."
+        "Par rapport au prix moyen national, ceux des deux départements corses sont plus élevés notamment {round(100 * ls_valeurs[['pt_an_diff_fr_dpt2a']], 1)}% pour la Corse-du-Sud du fait de la grande taille de ceux-ci et du prix moyen au mètre carré et de {round(100 * ls_valeurs[['pt_an_diff_fr_dpt2b']], 1)}% pour la Haute-Corse."
       )  ,
-      "La part du montant de l'achat du terrain dans le cout total du projet suit la m\u00eame tendance. Si le taux pour la Corse est proche de celui France entière, il y a de fortes disparités départementales, dues à la taille des terrains et au prix moyen au mètre carré. ",
+      "La part du montant de l'achat du terrain dans le cout total du projet suit la m\u00eame tendance. Si le taux pour la Corse est proche de celui France entière, il y a de fortes disparités départementales.",
       stringr::str_glue(
         "Le montant moyen d'un projet est de {ls_valeurs[['pt_an_pjt_diff_dpt2a_dpt2b']]} plus important en Corse-du-Sud qu'en Haute-Corse. Les montants moyens sont respectivement supérieurs de xx et xx% au montant moyen de la France."
       )
