@@ -21,20 +21,30 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # prix des terrains
 
+    # terrain prix  m2 an N
+
     pt_m2_an = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>%
       dplyr::pull(value),
 
+    # terrain prix  m2 an N-1
+    #
     pt_m2_an_prec = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>%
       dplyr::pull(value0),
 
+    # terrain prix  m2 an N Q1
+    #
     pt_m2_an_q1 = tab_calculs[["terrains_autres_reg"]] %>%
       dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2q1),
 
+    # terrain prix  m2 an N m2 Q2
+    #
     pt_m2_an_q2 = tab_calculs[["terrains_autres_reg"]] %>%
       dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2q2),
 
+    # terrain prix  m2 an N m2 Q3
+    #
     pt_m2_an_q3 = tab_calculs[["terrains_autres_reg"]] %>%
       dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2q3),
 
@@ -80,9 +90,14 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # prix des terrains evolutions sur 1 an et depuis 2010
 
+    # terrain tx diff prix m2 an N an N-1
+    #
     pt_m2_evol_1an = tab_calculs[["terrains_an"]] %>%
-      dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>% dplyr::pull(taux),
+      dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>%
+      dplyr::pull(taux),
 
+    # terrain tx diff prix m2 an N an 2010
+    #
     pt_m2_evol_dep2010 = tab_calculs[["terrains_depuis2010"]] %>%
       dplyr::filter(
         territoire %in% "Corse",
@@ -91,20 +106,28 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       ) %>%
       dplyr::pull(taux) %>% round(., 1),
 
-    # surfaces des terrains
+    # Terrains surfaces
 
+    # terrain surface m2 an N
+    #
     st_m2_an = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "surf_m2") %>%
       dplyr::pull(value),
 
+    # terrain surface m2 an N-1
+    #
     st_m2_an_prec = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "surf_m2") %>%
       dplyr::pull(value0),
 
+    # terrain surface m2 taux diff an N an N-1
+    #
     st_m2_evol_1an = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "surf_m2") %>%
       dplyr::pull(taux) %>% round(., 1),
 
+    # terrain surface m2 taux diff an N an 2010
+    #
     st_m2_evol_dep2010 = tab_calculs[["terrains_depuis2010"]] %>%
       dplyr::filter(
         territoire %in% "Corse",
@@ -113,16 +136,22 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       ) %>%
       dplyr::pull(taux) %>% round(., 1),
 
-    # surface des maisons
+    # Maisons surface
 
+    # Maisons surface m2 an N
+    #
     sm_m2_an = tab_calculs[["maisons_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "surf_m2") %>%
       dplyr::pull(value),
 
+    # Maisons surface m2 an N-1
+    #
     sm_m2_an_prec = tab_calculs[["maisons_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "surf_m2") %>%
       dplyr::pull(value0),
 
+    # Maisons surface m2 an 2010
+    #
     sm_m2_2010 = tab_calculs[["maisons_depuis2010"]] %>%
       dplyr::filter(
         territoire %in% "Corse",
@@ -130,16 +159,23 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         indic %in% "surf_m2"
       ) %>% dplyr::pull(value0),
 
-    # prix au m2 des maisons
+    # Maisons prix au m2
+    #
 
+    # Maisons prix au m2 an N
+    #
     pm_m2_an = tab_calculs[["maisons_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>%
       dplyr::pull(value),
 
+    # Maisons prix au m2 an N-1
+    #
     pm_m2_an_prec = tab_calculs[["maisons_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>%
       dplyr::pull(value0),
 
+    # Maisons prix au m2 an 2010
+    #
     pm_m2_2010 = tab_calculs[["maisons_depuis2010"]] %>%
       dplyr::filter(
         territoire %in% "Corse",
@@ -147,6 +183,8 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         indic %in% "prix_m2"
       ) %>% dplyr::pull(value0),
 
+    # Maisons prix au m2  taux diff an N an 2010
+    #
     pm_m2_evol_1an = tab_calculs[["maisons_depuis2010"]] %>%
       dplyr::filter(
         territoire %in% "Corse",
@@ -154,23 +192,31 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         indic %in% "prix_m2"
       ) %>% dplyr::pull(taux),
 
-    pm_m2_evol_1an = tab_calculs[["maisons_depuis2010"]] %>%
-      dplyr::filter(
-        territoire %in% "Corse",
-        annee %in% resultats[["annee_etude"]],
-        indic %in% "prix_m2"
-      ) %>% dplyr::pull(taux),
+    # pm_m2_evol_1an = tab_calculs[["maisons_depuis2010"]] %>%
+    #   dplyr::filter(
+    #     territoire %in% "Corse",
+    #     annee %in% resultats[["annee_etude"]],
+    #     indic %in% "prix_m2"
+    #   ) %>% dplyr::pull(taux),
 
-    # prix total des maisons
 
+    # Maisons prix total
+    #
+
+    # Maisons prix total an N
+    #
     pm_tot_an = tab_calculs[["maisons_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "prix") %>%
       dplyr::pull(value),
 
+    # prix total des maisons an N-1
+    #
     pm_tot_an_prec = tab_calculs[["maisons_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "prix") %>%
       dplyr::pull(value0),
 
+    # prix total des maisons an 2010
+    #
     pm_tot_2010 = tab_calculs[["maisons_depuis2010"]] %>%
       dplyr::filter(
         territoire %in% "Corse",
