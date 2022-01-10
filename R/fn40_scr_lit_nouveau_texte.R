@@ -21,7 +21,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Projets
 
-    # Projets difference prix departements corses et france
+    # Projets difference prix departements corses
     # 2A
     pt_an_pjt_diff_cor_dpt2a <-
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
@@ -47,6 +47,19 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         d_2a_2b = `Corse-du-Sud` - `Haute-Corse`,
         td_2a_2b = d_2a_2b / `Haute-Corse`
       ) %>% dplyr::pull(td_2a_2b),
+
+
+    # Projets difference prix departements corses et France
+    # 2A
+    pt_an_pjt_diff_fr_dpt2a <-
+      tab_calculs[["terrains_depcor_compare_fr"]] %>%
+      dplyr::filter(indic %in% "cout_projet", territoire %in% "Corse-du-Sud") %>%
+      dplyr::pull(dt_dep_fr),
+    # 2B
+    pt_an_pjt_diff_fr_dpt2b <-
+      tab_calculs[["terrains_depcor_compare_fr"]] %>%
+      dplyr::filter(indic %in% "cout_projet", territoire %in% "Haute-Corse") %>%
+      dplyr::pull(dt_dep_fr),
 
 
     # Terrains prix
@@ -248,7 +261,16 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         territoire %in% "Corse",
         annee %in% resultats[["annee_etude"]],
         indic %in% "prix"
-      ) %>% dplyr::pull(value0)
+      ) %>% dplyr::pull(value0),
+
+    # prix total des maisons an N classement
+    #
+    pm_tot_an_regions_clt = tab_calculs[["maisons_autres_reg_clt"]] %>%
+      dplyr::filter(
+        territoire %in% "Corse",
+        annee %in% resultats[["annee_etude"]],
+        indic %in% "prix"
+      ) %>% dplyr::pull(prix)
 
   ) -> ls_valeurs
 
@@ -292,14 +314,14 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       )  ,
       "La part du montant de l'achat du terrain dans le cout total du projet suit la m\u00eame tendance. Si le taux pour la Corse est proche de celui France entière, il y a de fortes disparités départementales.",
       stringr::str_glue(
-        "Le montant moyen d'un projet est de {ls_valeurs[['pt_an_pjt_diff_dpt2a_dpt2b']]} plus important en Corse-du-Sud qu'en Haute-Corse. Les montants moyens sont respectivement supérieurs de xx et xx% au montant moyen de la France."
+        "Le montant moyen d'un projet est de {ls_valeurs[['pt_an_pjt_diff_dpt2a_dpt2b']]} % plus important en Corse-du-Sud qu'en Haute-Corse. Les montants moyens sont respectivement supérieurs de {ls_valeurs[['pt_an_pjt_diff_fr_dpt2a']]} % et {ls_valeurs[['pt_an_pjt_diff_fr_dpt2b']]} % au montant moyen pour la France."
       )
     ),
 
     # second paragraphe
     "p1_bloc8_texte" = c(
       stringr::str_glue(
-        "Si la valeur moyenne des surfaces de plancher, pour les maisons construites ici ({ls_valeurs[['sm_m2_an']]} m\u00b2), placent la Corse dans la moyenne des régions, leur prix moyen au m\u00b2 ({ls_valeurs[['pm_m2_an']]}€/m\u00b2)est le plus important de France. Leur prix moyen ({ls_valeurs[['pm_tot_an']]}€) place aussi l’île en xx position des régions les plus chères derrière xxx et devant la xxx et la xxx."
+        "Si la valeur moyenne des surfaces de plancher, pour les maisons construites ici ({ls_valeurs[['sm_m2_an']]} m\u00b2), placent la Corse dans la moyenne des régions, leur prix moyen au m\u00b2 ({ls_valeurs[['pm_m2_an']]}€/m\u00b2) est le plus important de France. Leur prix moyen ({ls_valeurs[['pm_tot_an']]}€) place aussi l’île en {ls_valeurs[['pm_tot_an_regions_clt']]} position des régions les plus chères derrière xxx et devant les régions Grand-Est et Île-de-France."
       ),
       "Comme pour les terrains, les surfaces et montants moyens des maisons en Corse-du-Sud sont plus importants qu’en Haute-Corse." ,
       stringr::str_glue(
