@@ -21,82 +21,93 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # prix des terrains
 
-    # terrain prix  m2 an N
+    # terrains prix  m2 an N
 
     pt_m2_an = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>%
       dplyr::pull(value),
 
-    # terrain prix  m2 an N-1
+    # terrains prix  m2 an N-1
     #
     pt_m2_an_prec = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>%
       dplyr::pull(value0),
 
-    # terrain prix  m2 an N Q1
+    # terrains prix  m2 an N Q1
     #
     pt_m2_an_q1 = tab_calculs[["terrains_autres_reg"]] %>%
       dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2q1),
 
-    # terrain prix  m2 an N m2 Q2
+    # terrains prix  m2 an N m2 Q2
     #
     pt_m2_an_q2 = tab_calculs[["terrains_autres_reg"]] %>%
       dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2q2),
 
-    # terrain prix  m2 an N m2 Q3
+    # terrains prix  m2 an N m2 Q3
     #
     pt_m2_an_q3 = tab_calculs[["terrains_autres_reg"]] %>%
       dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2q3),
 
-    # difference prix_m2 departements corses et france
-
-    pt_an_m2_diff_fr_dpt2a <- tab_calculs[["terrains_depcor_compare_fr"]] %>%
+    # terrains difference prix_m2 departements corses et france
+    # 2A
+    pt_an_m2_diff_fr_dpt2a <-
+      tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "prix_m2", territoire %in% "Corse-du-Sud") %>%
       dplyr::pull(dt_dep_cor),
-
-    pt_an_m2_diff_fr_dpt2b <- tab_calculs[["terrains_depcor_compare_fr"]] %>%
+    # 2B
+    pt_an_m2_diff_fr_dpt2b <-
+      tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "prix_m2", territoire %in% "Haute-Corse") %>%
       dplyr::pull(dt_dep_cor),
 
-    # difference prix terrain departements corses et france
-
-    pt_an_diff_fr_dpt2a <- tab_calculs[["terrains_depcor_compare_fr"]] %>%
+    # terrains difference prix total departements corses et france
+    # 2A
+    pt_an_diff_fr_dpt2a <-
+      tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "prix", territoire %in% "Corse-du-Sud") %>%
       dplyr::pull(dt_dep_cor),
-
-    pt_an_diff_fr_dpt2b <- tab_calculs[["terrains_depcor_compare_fr"]] %>%
+    # 2B
+    pt_an_diff_fr_dpt2b <-
+      tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "prix", territoire %in% "Haute-Corse") %>%
       dplyr::pull(dt_dep_cor),
 
-    # difference projet departements corses et france
-
-    pt_an_pjt_diff_cor_dpt2a <- tab_calculs[["terrains_depcor_compare_fr"]] %>%
+    # Projet difference prix departements corses et france
+    # 2A
+    pt_an_pjt_diff_cor_dpt2a <-
+      tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "cout_projet", territoire %in% "Corse-du-Sud") %>%
       dplyr::pull(dt_dep_cor),
-
-    pt_an_pjt_diff_cor_dpt2b <- tab_calculs[["terrains_depcor_compare_fr"]] %>%
+    # 2B
+    pt_an_pjt_diff_cor_dpt2b <-
+      tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "cout_projet", territoire %in% "Haute-Corse") %>%
       dplyr::pull(dt_dep_cor),
 
     # difference prix projet 2A et 2B
 
-
-    pt_an_pjt_diff_dpt2a_dpt2b <- tab_calculs[["terrains_depcor_compare_fr"]] %>%
-      dplyr::filter(indic %in% "cout_projet", territoire %in% c("Corse-du-Sud", "Haute-Corse")) %>%
+    pt_an_pjt_diff_dpt2a_dpt2b <-
+      tab_calculs[["terrains_depcor_compare_fr"]] %>%
+      dplyr::filter(
+        indic %in% "cout_projet",
+        territoire %in% c("Corse-du-Sud", "Haute-Corse")
+      ) %>%
       dplyr::select(indic, territoire, value) %>%
       tidyr::pivot_wider(names_from = territoire, values_from = value) %>%
-      dplyr::mutate(d_2a_2b = `Corse-du-Sud` - `Haute-Corse`,
-                    td_2a_2b = d_2a_2b / `Haute-Corse`) %>% dplyr::pull(td_2a_2b),
+      dplyr::mutate(
+        d_2a_2b = `Corse-du-Sud` - `Haute-Corse`,
+        td_2a_2b = d_2a_2b / `Haute-Corse`
+      ) %>% dplyr::pull(td_2a_2b),
 
-    # prix des terrains evolutions sur 1 an et depuis 2010
+    # Terrains prix evolutions sur 1 an et depuis 2010
 
-    # terrain tx diff prix m2 an N an N-1
+    # terrains tx diff prix m2 an N an N-1
     #
     pt_m2_evol_1an = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>%
       dplyr::pull(taux),
 
-    # terrain tx diff prix m2 an N an 2010
+    # terrains tx diff prix m2 an N an 2010
     #
     pt_m2_evol_dep2010 = tab_calculs[["terrains_depuis2010"]] %>%
       dplyr::filter(
@@ -108,25 +119,25 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Terrains surfaces
 
-    # terrain surface m2 an N
+    # terrains surface m2 an N
     #
     st_m2_an = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "surf_m2") %>%
       dplyr::pull(value),
 
-    # terrain surface m2 an N-1
+    # terrains surface m2 an N-1
     #
     st_m2_an_prec = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "surf_m2") %>%
       dplyr::pull(value0),
 
-    # terrain surface m2 taux diff an N an N-1
+    # terrains surface m2 taux diff an N an N-1
     #
     st_m2_evol_1an = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "surf_m2") %>%
       dplyr::pull(taux) %>% round(., 1),
 
-    # terrain surface m2 taux diff an N an 2010
+    # terrains surface m2 taux diff an N an 2010
     #
     st_m2_evol_dep2010 = tab_calculs[["terrains_depuis2010"]] %>%
       dplyr::filter(
@@ -226,6 +237,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
   ) -> ls_valeurs
 
+
   purrr::map_if(.x = ls_valeurs,
                 .p = is.numeric,
                 ~ format(.x, big.mark   = ".", decimal.mark = ",")) -> ls_valeurs
@@ -308,7 +320,6 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
   purrr::map(mon_texte, utf8::as_utf8) -> mon_texte
   # purrr::map(mon_texte, validUTF8)
   purrr::map_dfr(mon_texte, ~ tibble::tibble("nblt_r" = length(.x)), .id = "par") -> eff
-  list("eff" =eff, "mon_texte" = mon_texte)-> ls_newtxt
+  list("eff" = eff, "mon_texte" = mon_texte) -> ls_newtxt
   return(ls_newtxt)
 }
-
