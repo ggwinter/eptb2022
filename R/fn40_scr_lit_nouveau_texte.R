@@ -3,11 +3,19 @@
 #' @param x annee etude en caratere
 #'
 #' @return liste
+#' @importFrom dplyr arrange
 #' @importFrom dplyr filter
+#' @importFrom dplyr mutate
 #' @importFrom dplyr pull
+#' @importFrom dplyr select
+#' @importFrom dplyr slice
 #' @importFrom purrr map
+#' @importFrom purrr map_dfr
 #' @importFrom purrr map_if
+#' @importFrom stringr str_c
 #' @importFrom stringr str_glue
+#' @importFrom tidyr pivot_wider
+#' @importFrom tidyr separate
 #' @importFrom utf8 as_utf8
 #' @export
 #'
@@ -346,7 +354,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
   # texte de remplacement : -------
 
   list(
-    # texte résumé
+    # page1 texte résumé
     "p1_bloc2_resume" = c(
       stringr::str_glue(
         "En Corse, en {ls_valeurs[['annee_etude']]}, le prix du mètre carré de terrain a augmenté/diminué de {ls_valeurs[['st_m2_evol_1an']]} % par rapport à l\'année précédente et s\'établit en moyenne à {ls_valeurs[['pt_m2_an']]} euros."
@@ -356,7 +364,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       )
     ),
 
-    # premier paragraphe
+    # page1 premier paragraphe terrains
     "p1_bloc6_texte" = c(
       stringr::str_glue(
         "En {ls_valeurs[['annee_etude']]}, le mètre carré de terrain s'est vendu en moyenne à {ls_valeurs[['pt_m2_an']]} euros soit une hausse annuelle de {ls_valeurs[['pt_m2_evol_1an']]} % et de {ls_valeurs[['pt_m2_evol_dep2010']]} % depuis 2010."
@@ -382,7 +390,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       )
     ),
 
-    # second paragraphe
+    # page2 premier paragraphe terrains themes
     "p1_bloc8_texte" = c(
       stringr::str_glue(
         "Si la valeur moyenne des surfaces de plancher, pour les maisons construites ici ({ls_valeurs[['sm_m2_an']]} m\u00b2), place la Corse dans la moyenne des régions, leur prix moyen au m\u00b2 ({ls_valeurs[['pm_m2_an']]}€/m\u00b2) est le plus important de France. Leur prix moyen ({ls_valeurs[['pm_tot_an']]}€) place aussi l’île en {ls_valeurs[['pm_tot_an_regions_clt']]} position des régions les plus chères (derrière xxx) et devant les régions Grand-Est et Île-de-France."
@@ -399,22 +407,42 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       )
     ),
 
-    # 3eme paragraphe
+    # page3 premier paragraphe maisons
     "p2_bloc3_texte" = c(
       "La classe d'\u00e2ge des moins de 30 ans ach\u00eate en moyenne les terrains (les moins chers) mais privilégie quand m\u00eame une surface proche de la moyenne régionale. Du fait que la part de primo-accédant est particulièrement forte dans cette tranche d'age, le coût total du projet (maison+terrain) est aussi le moins important."   ,
-      "Comme attendu, plus le propriétaire est \u00e2gé, plus le prix du terrain acheté et le coût du projet total est élevé (xx\\% par rapport à la moyenne régionale)."  ,
-      "Selon la catégorie socio-professionnelle de l'acheteur, le prix moyen du terrain varie de {ls_valeurs[['st_m2_an_csp_range']][1]} à {ls_valeurs[['st_m2_an_csp_range']][2]} euros du mètre carré, les prix les plus élevés concernent les {ls_valeurs[['pt_an_pluscher_csp']]}. ",
+      stringr::str_glue(
+        "Comme attendu, plus le propriétaire est \u00e2gé, plus le prix du terrain acheté et le coût du projet total est élevé (xx\\% par rapport à la moyenne régionale)."
+      ),
+      stringr::str_glue(
+        "Selon la catégorie socio-professionnelle de l'acheteur, le prix moyen du terrain varie de {ls_valeurs[['st_m2_an_csp_range']][1]} à {ls_valeurs[['st_m2_an_csp_range']][2]} euros du mètre carré, les prix les plus élevés concernent les {ls_valeurs[['pt_an_pluscher_csp']]}. "
+      ),
       "Les projet concernent très majoritairement la construction de résidences principales.",
-      "L'achat des terrains non viabilisés porte sur des parcelles de plus grande taille ({ls_valeurs[['st_m2_an_viabilisation_ouinon']][2]} au lieu de {ls_valeurs[['st_m2_an_viabilisation_ouinon']][1]} m\u00b2) avec un coût de projet plus important ({ls_valeurs[['cp_an_viabilisation_ouinon']][2]} au lieu de {ls_valeurs[['cp_an_viabilisation_ouinon']][1]} euros). Leur prix au mètre carré est normalement plus faible ({ls_valeurs[['pt_m2_an_viabilisation_ouinon']][2]} au lieu de {ls_valeurs[['pt_m2_an_viabilisation_ouinon']][1]} m\u00b2)."
+      stringr::str_glue(
+        "L'achat des terrains non viabilisés porte sur des parcelles de plus grande taille ({ls_valeurs[['st_m2_an_viabilisation_ouinon']][2]} au lieu de {ls_valeurs[['st_m2_an_viabilisation_ouinon']][1]} m\u00b2) avec un coût de projet plus important ({ls_valeurs[['cp_an_viabilisation_ouinon']][2]} au lieu de {ls_valeurs[['cp_an_viabilisation_ouinon']][1]} euros). Leur prix au mètre carré est normalement plus faible ({ls_valeurs[['pt_m2_an_viabilisation_ouinon']][2]} au lieu de {ls_valeurs[['pt_m2_an_viabilisation_ouinon']][1]} m\u00b2)."
+      )
     ),
 
-    # 4eme paragraphe
+    # 4eme paragraphe maisons themes
     "p3_bloc2_texte" = c(
-      "La classe d'\u00e2ge des moins de 30 ans ach\u00eate en moyenne les terrains les moins chers mais privilégie quand m\u00eame une surface proche de la moyenne régionale. Du fait que la part de primo-accédant est particulièrement forte dans cette tranche d'age, le coût total du projet (maison+terrain) est aussi le moins important."   ,
-      "Comme attendu, plus le propriétaire est \u00e2gé, plus la superficie du terrain acheté et le coût du projet total est élevé (xx\\% par rapport à la moyenne régionale)."  ,
-      "Selon la catégorie socio-professionnelle de l'acheteur, le prix moyen du terrain varie de xx à xx euros du mètre carré, les prix les plus élevés concernent les retraités les artisans, commerçants, chefs d'entreprise et les cadres et professions intellectuelles supérieures. Cette dernière catégorie ach\u00eate aussi en moyenne les terrains les plus grands et chers.  ",
-      "Les projet concernent très majoritairement la construction de résidences principales.",
-      "L'achat des terrains non viabilisés porte sur des parcelles de plus grande taille (+xx \\%) avec un coût de projet plus important (+xx\\%). Leur prix au mètre carré est normalement plus faible (-xx\\%)."
+      stringr::str_glue(
+        "En {ls_valeurs[['annee_etude']]}, les dispositifs utilisant {ls_valeurs$nm_an_chaufage_part_minmax$indic_cat2[1]} s'imposent comme le mode de chauffage le plus répandu dans la construction de maisons individuelles : ils sont présents seuls ou combinés entre eux dans {ls_valeurs$nm_an_chaufage_part_minmax$part[1]} des projets)."
+      ),
+      stringr::str_glue(
+        "Ce taux est de XX points supérieur à la moyenne nationale (XX%). L'utilisation des {ls_valeurs$nm_an_chaufage_part_minmax$indic_cat2[2]} est en seconde position {ls_valeurs$nm_an_chaufage_part_minmax$part[2]} % des projets et XX points par rapport à la moyenne nationale)."
+      ),
+      "La proportion de nouvelles maisons chauffées au gaz reste anecdotique en Corse.",
+      stringr::str_glue(
+        "Près de la moitié ({ls_valeurs$nm_an_moe_part_parti_cor}) des constructions de maisons sont supervisées par les particuliers eux-m\c3aame pour un peu plus d'un quart (XX%) au niveau national."
+      ),
+      stringr::str_glue(
+        "L'intervention d'un constructeur de maisons individuelle ne se fait que dans {ls_valeurs$nm_an_moe_part_cmi_cor} des cas, alors qu'au niveau national, ce taux est de XX%, de m\c3aame pour les entrepreneurs et artisans oû les taux pour la Corse et France entière sont {ls_valeurs$nm_an_moe_part_eoa_cor} contre XX%."
+      ),
+      stringr::str_glue(
+        "Le prix moyen par mètre carré des maisons est de {ls_valeurs$pm_m2_an euros} ; il varie selon le ma\c3aetre d'oevre entre {ls_valeurs$pm_m2_an_moe_min %>% dplyr::pull(prix_m2)} euros dans le cas des {ls_valeurs$pm_m2_an_moe_min %>% dplyr::pull(indic_cat)} à {ls_valeurs$pm_m2_an_moe_max %>% dplyr::pull(prix_m2)} pour les {ls_valeurs$pm_m2_an_moe_max %>% dplyr::pull(indic_cat)}."
+      ),
+      stringr::str_glue(
+        "La surface moyenne des maisons est moins importante ({ls_valeurs$sm_m2_an_moe_cmi} m\u00b2) dans le cas d'un constructeur de maisons individuelles que lorsque le particulier réalise les travaux {ls_valeurs$sm_m2_an_moe_parti} m\u00b2."
+      )
     )
   ) -> mon_texte
   # purrr::map(mon_texte, utf8::utf8_valid)
