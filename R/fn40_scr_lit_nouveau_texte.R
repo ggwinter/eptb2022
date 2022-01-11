@@ -13,6 +13,7 @@
 #' @importFrom purrr map_dfr
 #' @importFrom purrr map_if
 #' @importFrom scales label_percent
+#' @importFrom stats complete.cases
 #' @importFrom stringr str_c
 #' @importFrom stringr str_glue
 #' @importFrom tidyr pivot_wider
@@ -267,7 +268,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       dplyr::filter(
         annee %in% resultats[["annee_etude"]],
         indic %in% "moe",
-        complete.cases(prix_m2),
+        stats::complete.cases(prix_m2),
         stringr::str_sub(indic_cat, 1, 2) %in% "04"
       ) %>% dplyr::pull(surf_m2),
 
@@ -277,7 +278,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       dplyr::filter(
         annee %in% resultats[["annee_etude"]],
         indic %in% "moe",
-        complete.cases(prix_m2),
+        stats::complete.cases(prix_m2),
         stringr::str_sub(indic_cat, 1, 2) %in% "02"
       ) %>% dplyr::pull(surf_m2),
 
@@ -320,7 +321,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     pm_m2_an_moe_max <- tab_calculs[["maisons_themes"]] %>%
       dplyr::filter(annee %in% resultats[["annee_etude"]],
                     indic %in% "moe",
-                    complete.cases(prix_m2)) %>%
+                    stats::complete.cases(prix_m2)) %>%
       dplyr::select(indic_cat, prix_m2) %>%
       tidyr::separate(
         col = "indic_cat",
@@ -333,7 +334,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     pm_m2_an_moe_min <- tab_calculs[["maisons_themes"]] %>%
       dplyr::filter(annee %in% resultats[["annee_etude"]],
                     indic %in% "moe",
-                    complete.cases(prix_m2)) %>%
+                    stats::complete.cases(prix_m2)) %>%
       dplyr::select(indic_cat, prix_m2) %>%
       tidyr::separate(
         col = "indic_cat",
@@ -416,7 +417,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
           dplyr::filter(
             annee %in% resultats[["annee_etude"]],
             indic %in% "chauffage",
-            complete.cases(prix_m2)
+            stats::complete.cases(prix_m2)
           ) %>%
           dplyr::mutate(
             indic_cat2 = dplyr::case_when(
