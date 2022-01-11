@@ -528,7 +528,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         "L'intervention d'un constructeur de maisons individuelle ne se fait que dans {ls_valeurs$nm_an_moe_part_cmi_cor} des cas, alors qu'au niveau national, ce taux est de XX%, de m\uc3aame pour les entrepreneurs et artisans oû les taux pour la Corse et France entière sont {ls_valeurs$nm_an_moe_part_eoa_cor} contre XX%."
       ),
       stringr::str_glue(
-        "Le prix moyen par mètre carré des maisons est de {ls_valeurs$pm_m2_an euros} ; il varie selon le ma\c3aetre d'oevre entre {ls_valeurs$pm_m2_an_moe_min %>% dplyr::pull(prix_m2)} euros dans le cas des {ls_valeurs$pm_m2_an_moe_min %>% dplyr::pull(indic_cat)} à {ls_valeurs$pm_m2_an_moe_max %>% dplyr::pull(prix_m2)} pour les {ls_valeurs$pm_m2_an_moe_max %>% dplyr::pull(indic_cat)}."
+        "Le prix moyen par mètre carré des maisons est de {ls_valeurs$pm_m2_an euros} ; il varie selon le ma\uc3aetre d'oevre entre {ls_valeurs$pm_m2_an_moe_min %>% dplyr::pull(prix_m2)} euros dans le cas des {ls_valeurs$pm_m2_an_moe_min %>% dplyr::pull(indic_cat)} à {ls_valeurs$pm_m2_an_moe_max %>% dplyr::pull(prix_m2)} pour les {ls_valeurs$pm_m2_an_moe_max %>% dplyr::pull(indic_cat)}."
       ),
       stringr::str_glue(
         "La surface moyenne des maisons est moins importante ({ls_valeurs$sm_m2_an_moe_cmi} m\u00b2) dans le cas d'un constructeur de maisons individuelles que lorsque le particulier réalise les travaux {ls_valeurs$sm_m2_an_moe_parti} m\u00b2."
