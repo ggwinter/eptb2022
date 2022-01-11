@@ -72,10 +72,8 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     # Projets viabilisation
     #
     cp_an_viabilisation_ouinon = tab_calculs[["terrains_themes"]] %>%
-      dplyr::filter(
-        annee %in% resultats[["annee_etude"]],
-        indic %in% "viabilisation"
-      ) %>%
+      dplyr::filter(annee %in% resultats[["annee_etude"]],
+                    indic %in% "viabilisation") %>%
       dplyr::pull(cout_projet),
 
 
@@ -169,33 +167,30 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     # Terrains prix m2 an N CSP
     #
     pt_m2_an_csp_range = tab_calculs[["terrains_themes"]] %>%
-      dplyr::filter(
-        annee %in% resultats[["annee_etude"]],
-        indic %in% "csp"
-      ) %>%
+      dplyr::filter(annee %in% resultats[["annee_etude"]],
+                    indic %in% "csp") %>%
       dplyr::pull(prix_m2) %>% na.omit() %>% range(),
 
     # Terrains prix total an N CSP
     #
     pt_an_pluscher_csp = tab_calculs[["terrains_themes"]] %>%
-      dplyr::filter(
-        annee %in% resultats[["annee_etude"]],
-        indic %in% "csp"
-      ) %>%
+      dplyr::filter(annee %in% resultats[["annee_etude"]],
+                    indic %in% "csp") %>%
       dplyr::arrange(desc(prix)) %>%
       dplyr::slice(1:3) %>%
-      tidyr::separate(col = "indic_cat",
-                      into =c("eff", "indic_cat"), sep =":") %>%
+      tidyr::separate(
+        col = "indic_cat",
+        into = c("eff", "indic_cat"),
+        sep = ":"
+      ) %>%
       dplyr::pull(indic_cat) %>%  tolower() %>%
       stringr::str_c(., collapse = " ,"),
 
     # Terrains prix m2 an viabilisation
     #
     pt_an_m2_viabilisation_ouinon = tab_calculs[["terrains_themes"]] %>%
-      dplyr::filter(
-        annee %in% resultats[["annee_etude"]],
-        indic %in% "viabilisation"
-      ) %>%
+      dplyr::filter(annee %in% resultats[["annee_etude"]],
+                    indic %in% "viabilisation") %>%
       dplyr::pull(prix_m2),
 
 
@@ -234,10 +229,8 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     # Terrains surface m2 diff viabilisation
     #
     st_m2_an_viabilisation_ouinon = tab_calculs[["terrains_themes"]] %>%
-      dplyr::filter(
-        annee %in% resultats[["annee_etude"]],
-        indic %in% "viabilisation"
-      ) %>%
+      dplyr::filter(annee %in% resultats[["annee_etude"]],
+                    indic %in% "viabilisation") %>%
       dplyr::pull(surf_m2),
 
 
@@ -266,6 +259,26 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         annee %in% resultats[["annee_etude"]],
         indic %in% "surf_m2"
       ) %>% dplyr::pull(value0),
+
+    # Maisons surface m2 an moe construit particulier
+    #
+    sm_m2_an_moe_parti <- tab_calculs[["maisons_themes"]] %>%
+      dplyr::filter(
+        annee %in% resultats[["annee_etude"]],
+        indic %in% "moe",
+        complete.cases(prix_m2),
+        stringr::str_sub(indic_cat, 1, 2) %in% "04"
+      ) %>% dplyr::pull(surf_m2),
+
+    # Maisons surface m2 an moe construit constructeur maisons individuelles
+    #
+    sm_m2_an_moe_cmi <- tab_calculs[["maisons_themes"]] %>%
+      dplyr::filter(
+        annee %in% resultats[["annee_etude"]],
+        indic %in% "moe",
+        complete.cases(prix_m2),
+        stringr::str_sub(indic_cat, 1, 2) %in% "02"
+      ) %>% dplyr::pull(surf_m2),
 
 
 
@@ -303,12 +316,32 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         indic %in% "prix_m2"
       ) %>% dplyr::pull(taux),
 
-    # pm_m2_evol_1an = tab_calculs[["maisons_depuis2010"]] %>%
-    #   dplyr::filter(
-    #     territoire %in% "Corse",
-    #     annee %in% resultats[["annee_etude"]],
-    #     indic %in% "prix_m2"
-    #   ) %>% dplyr::pull(taux),
+    pm_m2_an_moe_max <- tab_calculs[["maisons_themes"]] %>%
+      dplyr::filter(annee %in% resultats[["annee_etude"]],
+                    indic %in% "moe",
+                    complete.cases(prix_m2)) %>%
+      dplyr::select(indic_cat, prix_m2) %>%
+      tidyr::separate(
+        col = "indic_cat",
+        into = c("eff", "indic_cat"),
+        sep = ":"
+      ) %>%
+      dplyr::mutate(indic_cat = stringr::str_trim(indic_cat) %>% tolower()) %>%
+      dplyr::filter(prix_m2 == max(prix_m2)) %>% dplyr::select(-eff),
+
+    pm_m2_an_moe_min <- tab_calculs[["maisons_themes"]] %>%
+      dplyr::filter(annee %in% resultats[["annee_etude"]],
+                    indic %in% "moe",
+                    complete.cases(prix_m2)) %>%
+      dplyr::select(indic_cat, prix_m2) %>%
+      tidyr::separate(
+        col = "indic_cat",
+        into = c("eff", "indic_cat"),
+        sep = ":"
+      ) %>%
+      dplyr::mutate(indic_cat = stringr::str_trim(indic_cat) %>% tolower()) %>%
+      dplyr::filter(prix_m2 == min(prix_m2)) %>% dplyr::select(-eff),
+
 
 
     # Maisons prix total
@@ -329,20 +362,77 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     # prix total des maisons an 2010
     #
     pm_tot_2010 = tab_calculs[["maisons_depuis2010"]] %>%
-      dplyr::filter(
-        territoire %in% "Corse",
-        annee %in% resultats[["annee_etude"]],
-        indic %in% "prix"
-      ) %>% dplyr::pull(value0),
+      dplyr::filter(territoire %in% "Corse",
+                    annee %in% resultats[["annee_etude"]],
+                    indic %in% "prix") %>% dplyr::pull(value0),
 
     # prix total des maisons an N classement
     #
     pm_tot_an_regions_clt = tab_calculs[["maisons_autres_reg_clt"]] %>%
+      dplyr::filter(territoire %in% "Corse",
+                    annee %in% resultats[["annee_etude"]],
+                    indic %in% "prix") %>% dplyr::pull(prix),
+
+
+
+    # MAISONS NOMBRE
+    #
+    # Maisons nombre mopart construit particulier
+    #
+    nm_an_moe_part_parti_cor <- tab_calculs[["maisons_themes"]] %>%
       dplyr::filter(
-        territoire %in% "Corse",
         annee %in% resultats[["annee_etude"]],
-        indic %in% "prix"
-      ) %>% dplyr::pull(prix)
+        indic %in% "moe",
+        stringr::str_sub(indic_cat, 1, 2) %in% "04"
+      ) %>%
+      dplyr::pull(part) %>% scales::label_percent()(.),
+
+    # Maisons nombre moe part construit constructeur maisons individuelles
+    #
+    nm_an_moe_part_cmi_cor <- tab_calculs[["maisons_themes"]] %>%
+      dplyr::filter(
+        annee %in% resultats[["annee_etude"]],
+        indic %in% "moe",
+        stringr::str_sub(indic_cat, 1, 2) %in% "02"
+      ) %>%
+      dplyr::pull(part) %>% scales::label_percent()(.),
+
+    # Maisons nombre mopart construit entreprise ou artisan
+    #
+    nm_an_moe_part_eoa_cor <- tab_calculs[["maisons_themes"]] %>%
+      dplyr::filter(
+        annee %in% resultats[["annee_etude"]],
+        indic %in% "moe",
+        stringr::str_sub(indic_cat, 1, 2) %in% "03"
+      ) %>%
+      dplyr::pull(part) %>% scales::label_percent()(.),
+
+    # Maisons nombre mopart construit entreprise ou artisan
+    #
+    nm_an_chaufage_part_minmax <-
+      purrr::map(
+        tab_calculs[["maisons_themes"]] %>%
+          dplyr::filter(
+            annee %in% resultats[["annee_etude"]],
+            indic %in% "chauffage",
+            complete.cases(prix_m2)
+          ) %>%
+          dplyr::mutate(
+            indic_cat2 = dplyr::case_when(
+              stringr::str_sub(indic_cat, 1, 2) %in% c("04", "05") ~ "les énergies renouvelables seules ou associées à un autre mode de chauffage",
+              stringr::str_sub(indic_cat, 1, 2) %in% c("02", "03") ~
+                "l'électricité seule ou combinée avec le chauffage au bois d'appoint",
+              stringr::str_sub(indic_cat, 1, 2) %in% c("06") ~
+                "autres (électricté plus gaz, ...)",
+              stringr::str_sub(indic_cat, 1, 2) %in% c("01") ~
+                "le gaz"
+            )
+          ) %>% dplyr::group_by(indic_cat2) %>%
+          dplyr::summarise(part = sum(part) %>% scales::label_percent()(.)) %>%
+          dplyr::arrange(desc(part)),
+        ~ unlist(.x)
+      )
+
 
   ) -> ls_valeurs
 
