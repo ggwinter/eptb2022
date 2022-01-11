@@ -522,10 +522,10 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       ),
       "La proportion de nouvelles maisons chauffées au gaz reste anecdotique en Corse.",
       stringr::str_glue(
-        "Près de la moitié ({ls_valeurs$nm_an_moe_part_parti_cor}) des constructions de maisons sont supervisées par les particuliers eux-m\c3aame pour un peu plus d'un quart (XX%) au niveau national."
+        "Près de la moitié ({ls_valeurs$nm_an_moe_part_parti_cor}) des constructions de maisons sont supervisées par les particuliers eux-m\uc3aame pour un peu plus d'un quart (XX%) au niveau national."
       ),
       stringr::str_glue(
-        "L'intervention d'un constructeur de maisons individuelle ne se fait que dans {ls_valeurs$nm_an_moe_part_cmi_cor} des cas, alors qu'au niveau national, ce taux est de XX%, de m\c3aame pour les entrepreneurs et artisans oû les taux pour la Corse et France entière sont {ls_valeurs$nm_an_moe_part_eoa_cor} contre XX%."
+        "L'intervention d'un constructeur de maisons individuelle ne se fait que dans {ls_valeurs$nm_an_moe_part_cmi_cor} des cas, alors qu'au niveau national, ce taux est de XX%, de m\uc3aame pour les entrepreneurs et artisans oû les taux pour la Corse et France entière sont {ls_valeurs$nm_an_moe_part_eoa_cor} contre XX%."
       ),
       stringr::str_glue(
         "Le prix moyen par mètre carré des maisons est de {ls_valeurs$pm_m2_an euros} ; il varie selon le ma\c3aetre d'oevre entre {ls_valeurs$pm_m2_an_moe_min %>% dplyr::pull(prix_m2)} euros dans le cas des {ls_valeurs$pm_m2_an_moe_min %>% dplyr::pull(indic_cat)} à {ls_valeurs$pm_m2_an_moe_max %>% dplyr::pull(prix_m2)} pour les {ls_valeurs$pm_m2_an_moe_max %>% dplyr::pull(indic_cat)}."
