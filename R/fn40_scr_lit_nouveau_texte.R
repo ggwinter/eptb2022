@@ -33,19 +33,19 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Projets difference prix departements corses
     # 2A
-    cp_an_pjt_diff_cor_dpt2a <-
+    cp_an_pjt_diff_cor_dpt2a =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "cout_projet", territoire %in% "Corse-du-Sud") %>%
       dplyr::pull(dt_dep_cor),
     # 2B
-    cp_an_pjt_diff_cor_dpt2b <-
+    cp_an_pjt_diff_cor_dpt2b =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "cout_projet", territoire %in% "Haute-Corse") %>%
       dplyr::pull(dt_dep_cor),
 
     # Projets difference prix 2A et 2B
 
-    cp_an_pjt_diff_dpt2a_dpt2b <-
+    cp_an_pjt_diff_dpt2a_dpt2b =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(
         indic %in% "cout_projet",
@@ -61,15 +61,17 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Projets difference prix departements corses et France
     # 2A
-    cp_an_pjt_diff_fr_dpt2a <-
+    cp_an_pjt_diff_fr_dpt2a =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "cout_projet", territoire %in% "Corse-du-Sud") %>%
-      dplyr::pull(dt_dep_fr),
+      dplyr::pull(dt_dep_fr) %>%
+      scales::label_percent(suffix = "%", decimal.mark = ",")(.),
     # 2B
-    cp_an_pjt_diff_fr_dpt2b <-
+    cp_an_pjt_diff_fr_dpt2b =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "cout_projet", territoire %in% "Haute-Corse") %>%
-      dplyr::pull(dt_dep_fr),
+      dplyr::pull(dt_dep_fr) %>%
+      scales::label_percent(suffix = "%", decimal.mark = ",")(.),
 
     # Projets viabilisation
     #
@@ -111,19 +113,21 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2q3),
 
 
-    # Terrains difference prix_m2 departements corses et france
+    # Terrains difference prix_m2 departements corses et corse
 
     # 2A
     pt_an_m2_diff_fr_dpt2a <-
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "prix_m2", territoire %in% "Corse-du-Sud") %>%
-      dplyr::pull(dt_dep_cor),
+      dplyr::pull(dt_dep_cor) %>%
+      scales::label_percent(suffix = "%", decimal.mark = ",")(.),
 
     # 2B
     pt_an_m2_diff_fr_dpt2b <-
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "prix_m2", territoire %in% "Haute-Corse") %>%
-      dplyr::pull(dt_dep_cor),
+      dplyr::pull(dt_dep_cor) %>%
+      scales::label_percent(suffix = "%", decimal.mark = ",")(.),
 
 
     # Terrains difference prix total departements corses et france
@@ -132,13 +136,15 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     pt_an_diff_fr_dpt2a <-
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "prix", territoire %in% "Corse-du-Sud") %>%
-      dplyr::pull(dt_dep_cor),
+      dplyr::pull(dt_dep_cor) %>%
+      scales::label_percent(suffix = "%", decimal.mark = ",")(.),
 
     # 2B
     pt_an_diff_fr_dpt2b <-
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "prix", territoire %in% "Haute-Corse") %>%
-      dplyr::pull(dt_dep_cor),
+      dplyr::pull(dt_dep_cor) %>%
+      scales::label_percent(suffix = "%", decimal.mark = ",")(.),
 
     # Terrains prix m2 classement corse
     #
@@ -264,7 +270,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Maisons surface m2 an moe construit particulier
     #
-    sm_m2_an_moe_parti <- tab_calculs[["maisons_themes"]] %>%
+    sm_m2_an_moe_parti = tab_calculs[["maisons_themes"]] %>%
       dplyr::filter(
         annee %in% resultats[["annee_etude"]],
         indic %in% "moe",
@@ -274,7 +280,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Maisons surface m2 an moe construit constructeur maisons individuelles
     #
-    sm_m2_an_moe_cmi <- tab_calculs[["maisons_themes"]] %>%
+    sm_m2_an_moe_cmi = tab_calculs[["maisons_themes"]] %>%
       dplyr::filter(
         annee %in% resultats[["annee_etude"]],
         indic %in% "moe",
@@ -316,9 +322,9 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         territoire %in% "Corse",
         annee %in% resultats[["annee_etude"]],
         indic %in% "prix_m2"
-      ) %>% dplyr::pull(taux),
+      ) %>% dplyr::pull(taux) %>% round(., 1),
 
-    pm_m2_an_moe_max <- tab_calculs[["maisons_themes"]] %>%
+    pm_m2_an_moe_max = tab_calculs[["maisons_themes"]] %>%
       dplyr::filter(annee %in% resultats[["annee_etude"]],
                     indic %in% "moe",
                     stats::complete.cases(prix_m2)) %>%
@@ -331,7 +337,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       dplyr::mutate(indic_cat = stringr::str_trim(indic_cat) %>% tolower()) %>%
       dplyr::filter(prix_m2 == max(prix_m2)) %>% dplyr::select(-eff),
 
-    pm_m2_an_moe_min <- tab_calculs[["maisons_themes"]] %>%
+    pm_m2_an_moe_min = tab_calculs[["maisons_themes"]] %>%
       dplyr::filter(annee %in% resultats[["annee_etude"]],
                     indic %in% "moe",
                     stats::complete.cases(prix_m2)) %>%
@@ -381,7 +387,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     #
     # Maisons nombre mopart construit particulier
     #
-    nm_an_moe_part_parti_cor <- tab_calculs[["maisons_themes"]] %>%
+    nm_an_moe_part_parti_cor = tab_calculs[["maisons_themes"]] %>%
       dplyr::filter(
         annee %in% resultats[["annee_etude"]],
         indic %in% "moe",
@@ -391,17 +397,18 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Maisons nombre moe part construit constructeur maisons individuelles
     #
-    nm_an_moe_part_cmi_cor <- tab_calculs[["maisons_themes"]] %>%
+    nm_an_moe_part_cmi_cor = tab_calculs[["maisons_themes"]] %>%
       dplyr::filter(
         annee %in% resultats[["annee_etude"]],
         indic %in% "moe",
         stringr::str_sub(indic_cat, 1, 2) %in% "02"
       ) %>%
-      dplyr::pull(part) %>% scales::label_percent()(.),
+      dplyr::pull(part) %>%
+      scales::label_percent(suffix = "%",decimal.mark = ",")(.),
 
     # Maisons nombre mopart construit entreprise ou artisan
     #
-    nm_an_moe_part_eoa_cor <- tab_calculs[["maisons_themes"]] %>%
+    nm_an_moe_part_eoa_cor = tab_calculs[["maisons_themes"]] %>%
       dplyr::filter(
         annee %in% resultats[["annee_etude"]],
         indic %in% "moe",
@@ -411,7 +418,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Maisons nombre mopart construit entreprise ou artisan
     #
-    nm_an_chaufage_part_minmax <-
+    nm_an_chaufage_part_minmax =
       purrr::map(
         tab_calculs[["maisons_themes"]] %>%
           dplyr::filter(
