@@ -371,9 +371,9 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     # prix total des maisons an N classement
     #
     pm_tot_an_regions_clt = tab_calculs[["maisons_autres_reg_clt"]] %>%
-      dplyr::filter(territoire %in% "Corse",
-                    annee %in% resultats[["annee_etude"]],
-                    indic %in% "prix") %>% dplyr::pull(prix),
+      dplyr::filter(reg_lib %in% "Corse",
+                    annee %in% resultats[["annee_etude"]]) %>%
+      dplyr::pull(prix),
 
 
 
