@@ -36,12 +36,12 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     cp_an_pjt_diff_cor_dpt2a =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "cout_projet", territoire %in% "Corse-du-Sud") %>%
-      dplyr::pull(dt_dep_cor),
+      dplyr::pull(dt_dep_cor) %>% scales::label_percent()(.),
     # 2B
     cp_an_pjt_diff_cor_dpt2b =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "cout_projet", territoire %in% "Haute-Corse") %>%
-      dplyr::pull(dt_dep_cor),
+      dplyr::pull(dt_dep_cor) %>% scales::label_percent()(.),
 
     # Projets difference prix 2A et 2B
 
@@ -56,7 +56,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       dplyr::mutate(
         d_2a_2b = `Corse-du-Sud` - `Haute-Corse`,
         td_2a_2b = d_2a_2b / `Haute-Corse`
-      ) %>% dplyr::pull(td_2a_2b),
+      ) %>% dplyr::pull(td_2a_2b) %>% scales::label_percent()(.),
 
 
     # Projets difference prix departements corses et France
@@ -324,6 +324,8 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         indic %in% "prix_m2"
       ) %>% dplyr::pull(taux) %>% round(., 1),
 
+    # Maisons prix au m2  moe prix_m2 max et min
+    #
     pm_m2_an_moe_max = tab_calculs[["maisons_themes"]] %>%
       dplyr::filter(annee %in% resultats[["annee_etude"]],
                     indic %in% "moe",
