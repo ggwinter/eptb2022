@@ -456,7 +456,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
   list(
     # page1 texte résumé
-    "p1_bloc2_resume" = c(
+    "p1d_resume" = c(
       stringr::str_glue(
         "En Corse, en {ls_valeurs[['annee_etude']]}, le prix du mètre carré de terrain a augmenté/diminué de {ls_valeurs[['st_m2_evol_1an']]} % par rapport à l\'année précédente et s\'établit en moyenne à {ls_valeurs[['pt_m2_an']]} euros."
       ),
@@ -466,7 +466,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     ),
 
     # page1 premier paragraphe terrains
-    "p1_bloc6_texte" = c(
+    "p1i_texte" = c(
       stringr::str_glue(
         "En {ls_valeurs[['annee_etude']]}, le mètre carré de terrain s'est vendu en moyenne à {ls_valeurs[['pt_m2_an']]} euros soit une hausse annuelle de {ls_valeurs[['pt_m2_evol_1an']]} % et de {ls_valeurs[['pt_m2_evol_dep2010']]} % depuis 2010."
       ),
@@ -479,20 +479,24 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       ) ,
       stringr::str_glue("• 50% à moins de {ls_valeurs[['pt_m2_an_q2']]} (médiane),") ,
       stringr::str_glue("• 75% à moins de {ls_valeurs[['pt_m2_an_q3']]} (Q3)."),
+      "",
       stringr::str_glue(
         "La superficie moyenne des terrains achetés dans l\'année est de {ls_valeurs[['st_m2_an']]} m\u00b2, surface en baisse de {ls_valeurs[['st_m2_evol_1an']]} % par rapport à {ls_valeurs[['annee_precedente']]} ({ls_valeurs[['st_m2_evol_dep2010']]} % avec 2010) mais avec des terrains beaucoup plus grands en Corse-du-Sud qu'en Haute Corse. "
       ),
+      "",
       stringr::str_glue(
         "Par rapport au prix moyen national, ceux des deux départements corses sont plus élevés notamment {round(100 * ls_valeurs[['pt_an_diff_fr_dpt2a']], 1)}% pour la Corse-du-Sud du fait de la grande taille de ceux-ci et du prix moyen au mètre carré et de {round(100 * ls_valeurs[['pt_an_diff_fr_dpt2b']], 1)}% pour la Haute-Corse."
       )  ,
+      "",
       "La part du montant de l'achat du terrain dans le cout total du projet suit la m\u00eame tendance. Si le taux pour la Corse est proche de celui France entière, il y a de fortes disparités départementales.",
+      "",
       stringr::str_glue(
         "Le montant moyen d'un projet est de {ls_valeurs[['cp_an_pjt_diff_dpt2a_dpt2b']]} % plus important en Corse-du-Sud qu'en Haute-Corse. Ils sont respectivement supérieurs de {ls_valeurs[['cp_an_pjt_diff_fr_dpt2a']]} % et {ls_valeurs[['cp_an_pjt_diff_fr_dpt2b']]} % au montant moyen pour la France."
       )
     ),
 
     # page2 premier paragraphe terrains themes
-    "p1_bloc8_texte" = c(
+    "p2c_texte" = c(
       stringr::str_glue(
         "Si la valeur moyenne des surfaces de plancher, pour les maisons construites ici ({ls_valeurs[['sm_m2_an']]} m\u00b2), place la Corse dans la moyenne des régions, leur prix moyen au m\u00b2 ({ls_valeurs[['pm_m2_an']]}€/m\u00b2) est le plus important de France. Leur prix moyen ({ls_valeurs[['pm_tot_an']]}€) place aussi l’île en {ls_valeurs[['pm_tot_an_regions_clt']]} position des régions les plus chères (derrière xxx) et devant les régions Grand-Est et Île-de-France."
       ),
@@ -509,7 +513,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     ),
 
     # page3 premier paragraphe maisons
-    "p2_bloc3_texte" = c(
+    "p2g_texte" = c(
       "La classe d'\u00e2ge des moins de 30 ans ach\u00eate en moyenne les terrains (les moins chers) mais privilégie quand m\u00eame une surface proche de la moyenne régionale. Du fait que la part de primo-accédant est particulièrement forte dans cette tranche d'age, le coût total du projet (maison+terrain) est aussi le moins important."   ,
       stringr::str_glue(
         "Comme attendu, plus le propriétaire est \u00e2gé, plus le prix du terrain acheté et le coût du projet total est élevé (xx\\% par rapport à la moyenne régionale)."
@@ -524,7 +528,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     ),
 
     # 4eme paragraphe maisons themes
-    "p3_bloc2_texte" = c(
+    "p3b_texte" = c(
       stringr::str_glue(
         "En {ls_valeurs[['annee_etude']]}, les dispositifs utilisant {ls_valeurs$nm_an_chaufage_part_minmax$indic_cat2[1]} s'imposent comme le mode de chauffage le plus répandu dans la construction de maisons individuelles : ils sont présents seuls ou combinés entre eux dans {ls_valeurs$nm_an_chaufage_part_minmax$part[1]} des projets)."
       ),
