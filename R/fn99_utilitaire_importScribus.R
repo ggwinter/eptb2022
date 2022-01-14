@@ -9,6 +9,6 @@
 fn99_utilitaire_importScribus <- function(x) {
 
   readLines(file.path(x))-> txt_plaquette
-  devtools::use_data(txt_plaquette)
+  usethis::use_data(txt_plaquette, overwrite = TRUE)
 
 }
