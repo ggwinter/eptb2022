@@ -24,7 +24,7 @@
 #' @importFrom xml2 xml_child
 #' @importFrom xml2 xml_children
 #' @importFrom xml2 xml_find_all
-#' @importFrom xml2 xml2 xml_remove
+#' @importFrom xml2 xml_remove
 #' @export
 #'
 fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
