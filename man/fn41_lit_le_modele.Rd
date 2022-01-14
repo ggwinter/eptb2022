@@ -2,7 +2,8 @@
 % Please edit documentation in R/fn41_lit_le_modele.R
 \name{fn41_lit_le_modele}
 \alias{fn41_lit_le_modele}
-\title{Scribus : texte, , lit la plaquette modele}
+\title{Scribus : texte, lit la plaquette modele, supprime les lignes et en cree
+autant de vides que dans le nouveau texte}
 \usage{
 fn41_lit_le_modele(x = ls_dates$annee_etude)
 }
@@ -13,5 +14,6 @@ fn41_lit_le_modele(x = ls_dates$annee_etude)
 
 }
 \description{
-Scribus : texte, , lit la plaquette modele
+Scribus : texte, lit la plaquette modele, supprime les lignes et en cree
+autant de vides que dans le nouveau texte
 }

@@ -4,10 +4,6 @@
 #' @param x date annee etude
 #'
 #' @return
-#' @importFrom xml2 read_xml
-#' @importFrom xml2 xml_attr
-#' @importFrom xml2 xml_children
-#' @importFrom xml2 xml_find_all
 #' @importFrom dplyr arrange
 #' @importFrom dplyr filter
 #' @importFrom dplyr inner_join
@@ -15,13 +11,20 @@
 #' @importFrom dplyr pull
 #' @importFrom dplyr select
 #' @importFrom dplyr tibble
-#' @importFrom here here
-#' @importFrom purrr map
 #' @importFrom purrr map_dfr
+#' @importFrom purrr map2
 #' @importFrom purrr set_names
+#' @importFrom purrr walk
 #' @importFrom stats na.omit
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_which
+#' @importFrom xml2 read_xml
+#' @importFrom xml2 xml_add_child
+#' @importFrom xml2 xml_attr
+#' @importFrom xml2 xml_child
+#' @importFrom xml2 xml_children
+#' @importFrom xml2 xml_find_all
+#' @importFrom xml2 xml2 xml_remove
 #' @export
 #'
 fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
