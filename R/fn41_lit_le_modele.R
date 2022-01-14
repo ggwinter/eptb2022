@@ -37,35 +37,8 @@ fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
 
 
   # liste des objets nommés
-  pg %>% xml2::xml_find_all(".//PAGEOBJECT") %>%
-    xml2::xml_attr("ANNAME") -> noms_objets
-
-
-  pg %>% xml2::xml_find_all(".//PAGEOBJECT") %>%
-    xml2::xml_attr("ItemID") -> id_objets
-
-  id_objets[-c(which(is.na(noms_objets)))] -> id_objets
-
-  stats::na.omit(noms_objets) -> noms_objets
-
-  purrr::map(
-    noms_objets,
-    ~ stringr::str_which(
-      pg %>% xml2::xml_find_all(".//PAGEOBJECT") %>%
-        xml2::xml_attr("ANNAME"),
-      .x
-    )
-  ) %>% unlist() -> nums_objets
-
-
-
-  dplyr::tibble(nom_objet = noms_objets,
-                id_objet = id_objets,
-                num_objet = nums_objets) %>%
-    dplyr::arrange(nom_objet) -> t_objets_numero
-
-
-
+  purrr::map_dfr(eff, ~.x[c("ANNAME", "ItemID")], .id = "num_objet") %>%
+    dplyr::rename(c("nom_objet" = "ANNAME", "id_objet"= "ItemID"))-> t_objets_numero
 
   # les paragraphes ----------
 
