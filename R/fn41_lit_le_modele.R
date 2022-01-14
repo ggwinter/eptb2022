@@ -1,4 +1,5 @@
-#' Scribus : texte, , lit la plaquette modele
+#' Scribus : texte, lit la plaquette modele, supprime les lignes et en cree
+#' autant de vides que dans le nouveau texte
 #'
 #' @param x date annee etude
 #'
@@ -24,6 +25,8 @@
 #' @export
 #'
 fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
+  # Lecture du texte avant modification de la plaquette ---------
+
   # Lecture du texte avant modification de la plaquette ---------
 
   data("txt_plaquette", package = "eptb2022")
@@ -61,15 +64,83 @@ fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
 
 
 
-
-
-
   # les paragraphes ----------
 
   t_objets_numero %>%
     dplyr::filter(stringr::str_detect(nom_objet, "_texte|_resume")) -> t_paragraphes
 
   # x <- t_paragraphes$nom_objet[1]
+
+  t_paragraphes %>% dplyr::inner_join(ls_newtxt$eff, by =c("nom_objet" = "par"))-> t_paragraphes
+
+
+
+  # Supprimer le contenu existant des paragraphes du modèle
+  #
+  # test num_node = 4
+  fn_supprime_text0 <- function(x = "p1_bloc2_resume") {
+    stringr::str_which(pg %>% xml2::xml_find_all(".//PAGEOBJECT") %>%
+                         xml2::xml_attr("ANNAME"),
+                       x) -> num_node
+
+    pg %>% xml2::xml_find_all(".//PAGEOBJECT") %>%
+      .[[num_node]]  %>%
+      xml2::xml_child("StoryText")  %>%
+      xml2::xml_children() %>% length() -> nb_lgn0
+
+
+    xml2::xml_remove(
+      pg %>%
+        xml2::xml_find_all(".//PAGEOBJECT") %>%
+        .[[num_node]] %>%
+        xml2::xml_child("StoryText")  %>%
+        xml2::xml_children() %>%
+        .[2:nb_lgn0],
+      free = TRUE
+    )
+  }
+
+
+  t_paragraphes %>% dplyr::pull(nom_objet) %>%
+    purrr::set_names() -> noms_paragraphes
+
+  purrr::walk(noms_paragraphes, fn_supprime_text0)
+
+  # ajouter le nombre de lignes vides correspondant au nombre de lignes du
+  # nouveau texte
+
+  fn_ajoute_2_nodes <- function(x = 4) {
+    pg %>%
+      xml2::xml_find_all(".//PAGEOBJECT") %>%
+      .[[x]] %>%
+      xml2::xml_child("StoryText") %>%
+      xml2::xml_add_child(., xml2::read_xml('<ITEXT CH=""/>'))
+
+    pg %>%
+      xml2::xml_find_all(".//PAGEOBJECT") %>%
+      .[[x]] %>%
+      xml2::xml_child("StoryText") %>%
+      xml2::xml_add_child(., xml2::read_xml('<para/>'))
+  }
+
+  # test
+  # fn_ajoute_2_nodes()
+
+  purrr::map2(t_paragraphes %>% dplyr::pull(num_objet),
+              t_paragraphes %>% dplyr::pull(nblt_r), ~rep(.x, .y)) %>%
+    unlist()-> iterations
+
+  # Verification que tout a bien fonctionné
+  # test
+  # purrr::walk(c(4,4), fn_ajoute_2_nodes)
+
+  # pg %>%
+  #   xml2::xml_find_all(".//PAGEOBJECT") %>%
+  #   .[[4]] %>%
+  #   xml2::xml_child("StoryText")
+
+
+  purrr::walk(iterations, fn_ajoute_2_nodes)
 
 
   fn_lit_paragraphe <- function(x) {
@@ -91,6 +162,9 @@ fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
 
 
   purrr::map(paragraphes, fn_lit_paragraphe) -> texte_plaquette
+
+  # Verification que tout a bien fonctionné
+  purrr::map(texte_plaquette, ~all(nchar(.x)==0))
 
   purrr::map_dfr(texte_plaquette,
                  ~ dplyr::tibble("nblt_p" = length(.x)), .id = "par") %>%
@@ -116,10 +190,9 @@ fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
   purrr::map_dfr(parametre, fn_cree_table_pour_map) -> t_parametres
 
   return(list("t_parametres" = t_parametres,
-       "t_compare_texte" = t_compare_texte,
-       "texte_plaquette" = texte_plaquette,
-       "paragraphes" = paragraphes,
-       "t_objets_numero" = t_objets_numero,
-       "pg" = pg))
+              "t_compare_texte" = t_compare_texte,
+              "paragraphes" = paragraphes,
+              "t_objets_numero" = t_objets_numero,
+              "pg" = pg))
 
 }
