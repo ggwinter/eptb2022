@@ -153,7 +153,7 @@ fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
 
   purrr::map_dfr(texte_plaquette,
                  ~ dplyr::tibble("nblt_p" = length(.x)), .id = "par") %>%
-    dplyr::inner_join(ls_newtxt$eff, by = "par") %>%
+    dplyr::inner_join(ls_newtxt$t_paragraphes_new, by = "par") %>%
     dplyr::mutate(diff = nblt_p - nblt_r) %>%
     dplyr::inner_join(t_paragraphes %>% dplyr::select(nom_objet, num_objet),
                       by = c("par" = "nom_objet")) -> t_compare_texte
