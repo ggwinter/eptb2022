@@ -513,7 +513,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     ),
 
     # page3 premier paragraphe maisons
-    "p2g_texte" = c(
+    "p2h_texte" = c(
       "La classe d'\u00e2ge des moins de 30 ans ach\u00eate en moyenne les terrains (les moins chers) mais privilégie quand m\u00eame une surface proche de la moyenne régionale. Du fait que la part de primo-accédant est particulièrement forte dans cette tranche d'age, le coût total du projet (maison+terrain) est aussi le moins important."   ,
       stringr::str_glue(
         "Comme attendu, plus le propriétaire est \u00e2gé, plus le prix du terrain acheté et le coût du projet total est élevé (xx\\% par rapport à la moyenne régionale)."
