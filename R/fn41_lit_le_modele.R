@@ -113,7 +113,7 @@ fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
     t_paragraphes %>% dplyr::pull(nblt_r),
     ~ rep(.x, .y)
   ) %>%
-    unlist() -> iterations
+    unlist() %>% as.integer() -> iterations
 
   # Verification que tout a bien fonctionné
   # test
