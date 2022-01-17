@@ -38,10 +38,10 @@ fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
 
   # liste des objets nommés
 
-  pg %>% xml2::xml_find_all(".//PAGEOBJECT") %>% xml2::xml_attrs()-> eff
+  pg %>% xml2::xml_find_all(".//PAGEOBJECT") %>% xml2::xml_attrs() -> eff
 
-  purrr::map_dfr(eff, ~.x[c("ANNAME", "ItemID")], .id = "num_objet") %>%
-    dplyr::rename(c("nom_objet" = "ANNAME", "id_objet"= "ItemID"))-> t_objets_numero
+  purrr::map_dfr(eff, ~ .x[c("ANNAME", "ItemID")], .id = "num_objet") %>%
+    dplyr::rename(c("nom_objet" = "ANNAME", "id_objet" = "ItemID")) -> t_objets_numero
 
   # les paragraphes ----------
 
@@ -50,7 +50,10 @@ fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
 
   # x <- t_paragraphes$nom_objet[1]
 
-  t_paragraphes %>% dplyr::inner_join(ls_newtxt$eff, by =c("nom_objet" = "par"))-> t_paragraphes
+  stopifnot(nrow(t_paragraphes) == nrow(t_paragraphes_new))
+
+  t_paragraphes %>%
+    dplyr::inner_join(ls_newtxt$t_paragraphes_new, by = c("nom_objet" = "par")) -> t_paragraphes
 
 
 
@@ -105,9 +108,12 @@ fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
   # test
   # fn_ajoute_2_nodes()
 
-  purrr::map2(t_paragraphes %>% dplyr::pull(num_objet),
-              t_paragraphes %>% dplyr::pull(nblt_r), ~rep(.x, .y)) %>%
-    unlist()-> iterations
+  purrr::map2(
+    t_paragraphes %>% dplyr::pull(num_objet),
+    t_paragraphes %>% dplyr::pull(nblt_r),
+    ~ rep(.x, .y)
+  ) %>%
+    unlist() -> iterations
 
   # Verification que tout a bien fonctionné
   # test
@@ -143,7 +149,7 @@ fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
   purrr::map(paragraphes, fn_lit_paragraphe) -> texte_plaquette
 
   # Verification que tout a bien fonctionné
-  purrr::map(texte_plaquette, ~all(nchar(.x)==0))
+  purrr::map(texte_plaquette, ~ all(nchar(.x) == 0))
 
   purrr::map_dfr(texte_plaquette,
                  ~ dplyr::tibble("nblt_p" = length(.x)), .id = "par") %>%
@@ -168,10 +174,14 @@ fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
 
   purrr::map_dfr(parametre, fn_cree_table_pour_map) -> t_parametres
 
-  return(list("t_parametres" = t_parametres,
-              "t_compare_texte" = t_compare_texte,
-              "paragraphes" = paragraphes,
-              "t_objets_numero" = t_objets_numero,
-              "pg" = pg))
+  return(
+    list(
+      "t_parametres" = t_parametres,
+      "t_compare_texte" = t_compare_texte,
+      "paragraphes" = paragraphes,
+      "t_objets_numero" = t_objets_numero,
+      "pg" = pg
+    )
+  )
 
 }

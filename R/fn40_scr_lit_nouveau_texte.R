@@ -553,7 +553,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
   # purrr::map(mon_texte, utf8::utf8_valid)
   purrr::map(mon_texte, utf8::as_utf8) -> mon_texte
   # purrr::map(mon_texte, validUTF8)
-  purrr::map_dfr(mon_texte, ~ tibble::tibble("nblt_r" = length(.x)), .id = "par") -> eff
-  list("eff" = eff, "mon_texte" = mon_texte) -> ls_newtxt
+  purrr::map_dfr(mon_texte, ~ tibble::tibble("nblt_r" = length(.x)), .id = "par") -> t_paragraphes_new
+  list("t_paragraphes_new" = t_paragraphes_new, "mon_texte" = mon_texte) -> ls_newtxt
   return(ls_newtxt)
 }
