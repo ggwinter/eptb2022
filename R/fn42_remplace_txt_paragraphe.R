@@ -31,7 +31,7 @@ fn42_remplace_txt_paragraphe <- function(data = ls_modele$t_parametres) {
 
   purrr::pwalk(
     list(
-      "num_objet" = data %>% dplyr::pull(num_objet),
+      "num_objet" = data %>% dplyr::pull(num_objet) %>% as.integer(),
       "par" = data %>% dplyr::pull(par),
       "lgn" = data %>% dplyr::pull(lgn)
     ),
