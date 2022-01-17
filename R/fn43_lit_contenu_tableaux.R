@@ -22,14 +22,17 @@
 #' @importFrom xml2 xml_attr
 #' @importFrom xml2 xml_find_all
 #' @export
-fn43_lit_contenu_tableaux <- function(x = 2018){
+fn43_lit_contenu_tableaux <- function(x = 2020) {
   # tableaux existants ------
   #
-  ls_modele$t_objets_numero %>% dplyr::filter(stringr::str_detect(nom_objet, "tab")) %>%
-    dplyr::arrange(num_objet) -> t_tableaux
+  ls_modele$t_objets_numero %>%
+    dplyr::filter(stringr::str_detect(nom_objet, "tab")) %>%
+    dplyr::arrange(num_objet) %>%
+    dplyr::mutate(num_objet = as.integer(num_objet))-> t_tableaux
 
   t_tableaux  %>%
-    dplyr::mutate(tab = stringr::str_extract(nom_objet, "(?<=bloc[:digit:]{1,2}_).*$")) -> t_tableaux
+    dplyr::mutate(tab = stringr::str_extract(nom_objet, "(?<=p[:digit:][:lower:]_).*$")) %>%
+    dplyr::arrange(nom_objet)-> t_tableaux
 
 
   # tableau existant
@@ -123,7 +126,7 @@ fn43_lit_contenu_tableaux <- function(x = 2018){
       xml2::read_xml("<ITEXT CH=''/>")# complete les cellules sans itext
     )
   }
-  if(nrow(t_tableaux_cell_vides)>0) {
+  if (nrow(t_tableaux_cell_vides) > 0) {
     purrr::walk2(
       t_tableaux_cell_vides %>% dplyr::pull(num_objet),
       t_tableaux_cell_vides %>% dplyr::pull(cell_vides),
@@ -167,9 +170,10 @@ fn43_lit_contenu_tableaux <- function(x = 2018){
     dplyr::count(num_objet, name = "nbp") %>%
     dplyr::mutate(noms_objets2 = c("tab1", "tab2", "tab3", "tab4")) -> t_tableaux_nb_col_lgn
 
-  ls_tableaux0 <- list("t_tableaux" = t_tableaux,
-                       "t_tableaux_cell" = t_tableaux_cell,
-                       "t_tableaux_nb_col_lgn" = t_tableaux_nb_col_lgn
+  ls_tableaux0 <- list(
+    "t_tableaux" = t_tableaux,
+    "t_tableaux_cell" = t_tableaux_cell,
+    "t_tableaux_nb_col_lgn" = t_tableaux_nb_col_lgn
   )
 
   return(ls_tableaux0)
