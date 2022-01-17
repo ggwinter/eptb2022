@@ -14,7 +14,7 @@
 fn42b_remplace_txt_titre <- function(x = ls_dates$annee_etude) {
   ls_modele$t_objets_numero %>%
     dplyr::filter(stringr::str_detect(nom_objet, "_titre$|_Titre$")) %>%
-    dplyr::pull(num_objet) -> num_node_titre
+    dplyr::pull(num_objet) %>% as.integer() -> num_node_titre
 
   titre_new <- utf8::as_utf8(c("Prix des terrains à b\u00e2tir", paste0("en ", x)))#"Prix des terrains \u00e0 b\u00e2tir"
 
