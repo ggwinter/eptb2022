@@ -4,7 +4,7 @@
 \alias{fn43_lit_contenu_tableaux}
 \title{Scribus : tableaux, lit le contenu des tableaux du modele}
 \usage{
-fn43_lit_contenu_tableaux(x = 2018)
+fn43_lit_contenu_tableaux(x = 2020)
 }
 \arguments{
 \item{x}{vecteur}

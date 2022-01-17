@@ -122,7 +122,7 @@ fn44_tableaux_cellule_a_remplacer <- function(x = resultats[3:6]){
                dplyr::mutate(txt_new = utf8::as_utf8(txt_new))) -> ls_tab_contenu
 
   purrr::map2_dfr(ls_tab_contenu,
-                  c(6, 20, 25, 28),
+                  ls_tableaux0$t_tableaux %>% dplyr::pull(num_objet),
                   ~ .x %>%
                     dplyr::mutate(num_objet = .y),
                   ncol = as.integer(ncol)) -> df_tab_contenu
