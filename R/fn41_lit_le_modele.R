@@ -50,7 +50,7 @@ fn41_lit_le_modele <- function(x = ls_dates$annee_etude) {
 
   # x <- t_paragraphes$nom_objet[1]
 
-  stopifnot(nrow(t_paragraphes) == nrow(t_paragraphes_new))
+  stopifnot(nrow(t_paragraphes) == nrow(ls_newtxt$t_paragraphes_new))
 
   t_paragraphes %>%
     dplyr::inner_join(ls_newtxt$t_paragraphes_new, by = c("nom_objet" = "par")) -> t_paragraphes
