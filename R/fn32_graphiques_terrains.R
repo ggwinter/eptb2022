@@ -18,7 +18,7 @@
 #' @export
 fn32_graphiques_terrains <- function(data = doc_frcordep_filtre) {
   # G graphiques ----------
-ls_cowplot <- list()
+  ls_cowplot <- list()
   # G1 terrains prix moyen au m2 ---------
   #
 
@@ -55,7 +55,7 @@ ls_cowplot <- list()
       legend.justification = c(1.2, 0)
     ) +
     ggplot2::labs(title = "Prix moyen des terrains",
-                  caption = "Source :  SDES enqu\u00eete EPTB") -> plot_terr_prixm2
+                  caption = "Source :  SDES enqu\u00eate EPTB") -> plot_terr_prixm2
 
   plot_terr_prixm2
 
@@ -111,7 +111,7 @@ ls_cowplot <- list()
       legend.justification = c(1.2, 0)
     ) +
     ggplot2::labs(title = "Surface moyenne des terrains achetés",
-                  caption = "Source :  SDES enqu\u00eete EPTB") -> plot_terr_surf
+                  caption = "Source :  SDES enqu\u00eate EPTB") -> plot_terr_surf
 
   plot_terr_surf
 

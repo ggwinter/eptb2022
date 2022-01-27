@@ -51,7 +51,7 @@ data %>%
     legend.justification = c(1.2, 0)
   ) +
   ggplot2::labs(title = "Prix moyen des maisons individuelles",
-                caption = "Source :  SDES enqu\u00eete EPTB") -> plot_mai_prixm2
+                caption = "Source :  SDES enqu\u00eate EPTB") -> plot_mai_prixm2
 
 plot_mai_prixm2
 
@@ -101,7 +101,7 @@ data %>%
     legend.justification = c(1.2, 0)
   ) +
   ggplot2::labs(title = "Surface moyenne de plancher des maisons individuelles",
-                caption = "Source :  SDES enqu\u00eete EPTB") -> plot_mai_surf
+                caption = "Source :  SDES enqu\u00eate EPTB") -> plot_mai_surf
 
 plot_mai_surf
 
