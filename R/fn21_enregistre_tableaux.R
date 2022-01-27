@@ -56,7 +56,7 @@ fn21_enregistre_tableaux <- function(x = ls_dates$annee_etude) {
   }
 
   purrr::map_dfr(mes_param, fn_diff_fr_cor) -> tab_terrains_compare_dep_fr
-  rm(eff1_dep, eff1_fr, eff1_cor, eff1)
+
 
   # tableau comparatif maisons dep cor vs corse et france
   #
@@ -85,7 +85,7 @@ fn21_enregistre_tableaux <- function(x = ls_dates$annee_etude) {
     dplyr::mutate(dt_dep_cor = d_dep_cor / cor,
                   dt_dep_fr = d_dep_fr / fr) -> tab_maisons_compare_dep_fr
 
-  rm(eff1_dep, eff1_fr, eff1_cor, eff1)
+
 
 
   # tableau bilan
@@ -106,7 +106,7 @@ fn21_enregistre_tableaux <- function(x = ls_dates$annee_etude) {
       "maisons_depcor_compare_fr" = tab_maisons_compare_dep_fr
     )
 
-  rm(ls_beyond)
+
 
   if (exists("tab2_terrains_fr") == TRUE) {
     tab_calculs[["terrains_fr_indics_an"]] <- tab2_terrains_fr
