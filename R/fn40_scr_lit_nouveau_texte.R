@@ -483,13 +483,10 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       stringr::str_glue(
         "La superficie moyenne des terrains achetés dans l\'année est de {ls_valeurs[['st_m2_an']]} m\u00b2, surface en baisse de {ls_valeurs[['st_m2_evol_1an']]} % par rapport à {ls_valeurs[['annee_precedente']]} ({ls_valeurs[['st_m2_evol_dep2010']]} % avec 2010) mais avec des terrains beaucoup plus grands en Corse-du-Sud qu'en Haute Corse. "
       ),
-      "",
       stringr::str_glue(
         "Par rapport au prix moyen national, ceux des deux départements corses sont plus élevés notamment {round(100 * ls_valeurs[['pt_an_diff_fr_dpt2a']], 1)}% pour la Corse-du-Sud du fait de la grande taille de ceux-ci et du prix moyen au mètre carré et de {round(100 * ls_valeurs[['pt_an_diff_fr_dpt2b']], 1)}% pour la Haute-Corse."
       )  ,
-      "",
       "La part du montant de l'achat du terrain dans le cout total du projet suit la m\u00eame tendance. Si le taux pour la Corse est proche de celui France entière, il y a de fortes disparités départementales.",
-      "",
       stringr::str_glue(
         "Le montant moyen d'un projet est de {ls_valeurs[['cp_an_pjt_diff_dpt2a_dpt2b']]} % plus important en Corse-du-Sud qu'en Haute-Corse. Ils sont respectivement supérieurs de {ls_valeurs[['cp_an_pjt_diff_fr_dpt2a']]} % et {ls_valeurs[['cp_an_pjt_diff_fr_dpt2b']]} % au montant moyen pour la France."
       )
