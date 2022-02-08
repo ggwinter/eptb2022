@@ -28,5 +28,5 @@ fn33b_cowplot_maison_terrain <-
       # each individual subplot should have an aspect ratio of 1.3
       base_aspect_ratio = 1.3
     )
-    return(plot1by1)
+    # return(plot1by1)
   }
