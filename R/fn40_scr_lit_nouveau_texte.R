@@ -515,7 +515,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         "Depuis 2010, pour la Corse, la surface moyenne de plancher a évolué en dent de scie mais globalement à la baisse, passant de {ls_valeurs[['sm_m2_2010']]}m\u00b2 à {ls_valeurs[['sm_m2_an']]}m\u00b2."
       ),
       stringr::str_glue(
-        "Le prix moyen au mètre carré a fortement augmenté passant de {ls_valeurs[['pt_m2_2010']]} à {ls_valeurs[['pt_m2_an']]} euros."
+        "Le prix moyen au mètre carré a fortement augmenté passant de {ls_valeurs[['pm_m2_2010']]} à {ls_valeurs[['pm_m2_an']]} euros ({ls_valeurs[['pm_m2_an_prec']]} euros en {ls_valeurs[['annee_precedente']]})."
       ),
       stringr::str_glue(
         "Le prix moyen d’achat d’une maison a progressé dans le m\u00eame temps de {ls_valeurs[['pm_tot_2010']]} à {ls_valeurs[['pm_tot_an']]} euros."
