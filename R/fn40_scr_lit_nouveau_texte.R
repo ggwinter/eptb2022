@@ -33,19 +33,19 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Projets difference prix departements corses
     # 2A
-    cp_an_pjt_diff_cor_dpt2a =
+    cp_tot_an_diff_cor_dpt2a =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "cout_projet", territoire %in% "Corse-du-Sud") %>%
       dplyr::pull(dt_dep_cor) %>% scales::label_percent()(.),
     # 2B
-    cp_an_pjt_diff_cor_dpt2b =
+    cp_tot_an_diff_cor_dpt2b =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "cout_projet", territoire %in% "Haute-Corse") %>%
       dplyr::pull(dt_dep_cor) %>% scales::label_percent()(.),
 
     # Projets difference prix 2A et 2B
 
-    cp_an_pjt_diff_dpt2a_dpt2b =
+    cp_tot_an_diff_dpt2a_dpt2b =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(
         indic %in% "cout_projet",
@@ -61,13 +61,13 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Projets difference prix departements corses et France
     # 2A
-    cp_an_pjt_diff_fr_dpt2a =
+    cp_tot_an_diff_fr_dpt2a =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "cout_projet", territoire %in% "Corse-du-Sud") %>%
       dplyr::pull(dt_dep_fr) %>%
       scales::label_percent(suffix = "%", decimal.mark = ",")(.),
     # 2B
-    cp_an_pjt_diff_fr_dpt2b =
+    cp_tot_an_diff_fr_dpt2b =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "cout_projet", territoire %in% "Haute-Corse") %>%
       dplyr::pull(dt_dep_fr) %>%
@@ -75,7 +75,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Projets viabilisation
     #
-    cp_an_viabilisation_ouinon = tab_calculs[["terrains_themes"]] %>%
+    cp_tot_anviabilisation_ouinon = tab_calculs[["terrains_themes"]] %>%
       dplyr::filter(annee %in% resultats[["annee_etude"]],
                     indic %in% "viabilisation") %>%
       dplyr::pull(cout_projet),
@@ -116,14 +116,14 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     # Terrains difference prix_m2 departements corses et corse
 
     # 2A
-    pt_an_m2_diff_fr_dpt2a <-
+    pt_m2_an_diff_fr_dpt2a =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "prix_m2", territoire %in% "Corse-du-Sud") %>%
       dplyr::pull(dt_dep_cor) %>%
       scales::label_percent(suffix = "%", decimal.mark = ",")(.),
 
     # 2B
-    pt_an_m2_diff_fr_dpt2b <-
+    pt_m2_an_diff_fr_dpt2b =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "prix_m2", territoire %in% "Haute-Corse") %>%
       dplyr::pull(dt_dep_cor) %>%
@@ -133,22 +133,22 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
     # Terrains difference prix total departements corses et france
 
     # 2A
-    pt_an_diff_fr_dpt2a <-
+    pt_tot_an_diff_fr_dpt2a =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "prix", territoire %in% "Corse-du-Sud") %>%
       dplyr::pull(dt_dep_cor) %>%
       scales::label_percent(suffix = "%", decimal.mark = ",")(.),
 
     # 2B
-    pt_an_diff_fr_dpt2b <-
+    pt_tot_an_diff_fr_dpt2b =
       tab_calculs[["terrains_depcor_compare_fr"]] %>%
       dplyr::filter(indic %in% "prix", territoire %in% "Haute-Corse") %>%
       dplyr::pull(dt_dep_cor) %>%
       scales::label_percent(suffix = "%", decimal.mark = ",")(.),
 
-    # Terrains prix m2 classement corse
+    # Terrains prix m2 an N regions classement corse
     #
-    pt_m2_an_q2 = tab_calculs[["terrains_autres_reg_clt"]] %>%
+    pt_m2_an_regions_clt = tab_calculs[["terrains_autres_reg_clt"]] %>%
       dplyr::filter(reg_lib %in% "Corse") %>% dplyr::pull(prix_m2),
 
 
@@ -156,7 +156,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Terrains tx diff prix m2 an N an N-1
     #
-    pt_m2_an_corse_clt = tab_calculs[["terrains_an"]] %>%
+    pt_m2_evol_1an = tab_calculs[["terrains_an"]] %>%
       dplyr::filter(territoire %in% "Corse", indic %in% "prix_m2") %>%
       dplyr::pull(taux),
 
@@ -170,8 +170,6 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       ) %>%
       dplyr::pull(taux) %>% round(., 1),
 
-
-
     # Terrains prix m2 an N CSP
     #
     pt_m2_an_csp_range = tab_calculs[["terrains_themes"]] %>%
@@ -181,7 +179,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Terrains prix total an N CSP
     #
-    pt_an_pluscher_csp = tab_calculs[["terrains_themes"]] %>%
+    pt_tot_an_pluscher_csp = tab_calculs[["terrains_themes"]] %>%
       dplyr::filter(annee %in% resultats[["annee_etude"]],
                     indic %in% "csp") %>%
       dplyr::arrange(desc(prix)) %>%
@@ -196,7 +194,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
 
     # Terrains prix m2 an viabilisation
     #
-    pt_an_m2_viabilisation_ouinon = tab_calculs[["terrains_themes"]] %>%
+    pt_m2_an_viabilisation_ouinon = tab_calculs[["terrains_themes"]] %>%
       dplyr::filter(annee %in% resultats[["annee_etude"]],
                     indic %in% "viabilisation") %>%
       dplyr::pull(prix_m2),
@@ -471,7 +469,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         "En {ls_valeurs[['annee_etude']]}, le mètre carré de terrain s'est vendu en moyenne à {ls_valeurs[['pt_m2_an']]} euros soit une hausse annuelle de {ls_valeurs[['pt_m2_evol_1an']]} % et de {ls_valeurs[['pt_m2_evol_dep2010']]} % depuis 2010."
       ),
       stringr::str_glue(
-        "La Corse se situe au {ls_valeurs[['pt_m2_an_corse_clt']]} rang parmi les 13 régions métropolitaines."
+        "La Corse se situe au {ls_valeurs[['pt_m2_an_regions_clt']]} rang parmi les 12 régions métropolitaines et Collectivité de Corse."
       ),
       "Le prix moyen au mètre carré des terrains achetés masque des disparités liées à la situation et à la taille de ceux-ci :",
       stringr::str_glue(
@@ -484,43 +482,43 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         "La superficie moyenne des terrains achetés dans l\'année est de {ls_valeurs[['st_m2_an']]} m\u00b2, surface en baisse de {ls_valeurs[['st_m2_evol_1an']]} % par rapport à {ls_valeurs[['annee_precedente']]} ({ls_valeurs[['st_m2_evol_dep2010']]} % avec 2010) mais avec des terrains beaucoup plus grands en Corse-du-Sud qu'en Haute Corse. "
       ),
       stringr::str_glue(
-        "Par rapport au prix moyen national, ceux des deux départements corses sont plus élevés notamment {round(100 * ls_valeurs[['pt_an_diff_fr_dpt2a']], 1)}% pour la Corse-du-Sud du fait de la grande taille de ceux-ci et du prix moyen au mètre carré et de {round(100 * ls_valeurs[['pt_an_diff_fr_dpt2b']], 1)}% pour la Haute-Corse."
+        "Par rapport au prix moyen national, ceux des deux départements corses sont plus élevés notamment {ls_valeurs[['pt_tot_an_diff_fr_dpt2a']]} pour la Corse-du-Sud du fait de la grande taille de ceux-ci et du prix moyen au mètre carré et de {ls_valeurs[['pt_tot_an_diff_fr_dpt2b']]} pour la Haute-Corse."
       )  ,
       "La part du montant de l'achat du terrain dans le cout total du projet suit la m\u00eame tendance. Si le taux pour la Corse est proche de celui France entière, il y a de fortes disparités départementales.",
       stringr::str_glue(
-        "Le montant moyen d'un projet est de {ls_valeurs[['cp_an_pjt_diff_dpt2a_dpt2b']]} % plus important en Corse-du-Sud qu'en Haute-Corse. Ils sont respectivement supérieurs de {ls_valeurs[['cp_an_pjt_diff_fr_dpt2a']]} % et {ls_valeurs[['cp_an_pjt_diff_fr_dpt2b']]} % au montant moyen pour la France."
+        "Le montant moyen d'un projet est de {ls_valeurs[['cp_tot_an_diff_dpt2a_dpt2b']]} plus important en Corse-du-Sud qu'en Haute-Corse. Ils sont respectivement supérieurs de {ls_valeurs[['cp_tot_an_diff_fr_dpt2a']]} et {ls_valeurs[['cp_tot_an_diff_fr_dpt2b']]} au montant moyen pour la France."
       )
     ),
 
     # page2 premier paragraphe terrains themes
     "p2c_texte" = c(
+      "La classe d'\u00e2ge des moins de 30 ans ach\u00eate en moyenne les terrains (les moins chers) mais privilégie quand m\u00eame une surface proche de la moyenne régionale. Du fait que la part de primo-accédant est particulièrement forte dans cette tranche d'age, le coût total du projet (maison+terrain) est aussi le moins important."   ,
       stringr::str_glue(
-        "Si la valeur moyenne des surfaces de plancher, pour les maisons construites ici ({ls_valeurs[['sm_m2_an']]} m\u00b2), place la Corse dans la moyenne des régions, leur prix moyen au m\u00b2 ({ls_valeurs[['pm_m2_an']]}€/m\u00b2) est le plus important de France. Leur prix moyen ({ls_valeurs[['pm_tot_an']]}€) place aussi l’île en {ls_valeurs[['pm_tot_an_regions_clt']]} position des régions les plus chères (derrière xxx) et devant les régions Grand-Est et Île-de-France."
+        "Comme attendu, plus le propriétaire est \u00e2gé, plus le prix du terrain acheté et le coût du projet total est élevé (xx\\% par rapport à la moyenne régionale)."
+      ),
+      stringr::str_glue(
+        "Selon la catégorie socio-professionnelle de l'acheteur, le prix moyen du terrain varie de {ls_valeurs[['pt_m2_an_csp_range']][1]} à {ls_valeurs[['pt_m2_an_csp_range']][2]} euros du mètre carré, les prix les plus élevés concernent les {ls_valeurs[['pt_tot_an_pluscher_csp']]}. "
+      ),
+      "Les projet concernent très majoritairement la construction de résidences principales.",
+      stringr::str_glue(
+        "L'achat des terrains non viabilisés porte sur des parcelles de plus grande taille ({ls_valeurs[['st_m2_an_viabilisation_ouinon']][2]} au lieu de {ls_valeurs[['st_m2_an_viabilisation_ouinon']][1]} m\u00b2) avec un coût de projet plus important ({ls_valeurs[['cp_tot_anviabilisation_ouinon']][2]} au lieu de {ls_valeurs[['cp_tot_anviabilisation_ouinon']][1]} euros). Leur prix au mètre carré est normalement plus faible ({ls_valeurs[['pt_m2_an_viabilisation_ouinon']][2]} au lieu de {ls_valeurs[['pt_m2_an_viabilisation_ouinon']][1]} m\u00b2)."
+      )
+    ),
+
+    # page3 premier paragraphe maisons
+    "p2h_texte" = c(
+      stringr::str_glue(
+        "Si la valeur moyenne des surfaces de plancher, pour les maisons construites ici ({ls_valeurs[['sm_m2_an']]} m\u00b2), place la Corse dans la moyenne des régions, leur prix moyen au m\u00b2 ({ls_valeurs[['pm_m2_an']]}€/m\u00b2) est le plus important de France. Leur prix moyen ({ls_valeurs[['pm_tot_an']]}€) place aussi l’île en {ls_valeurs[['pm_tot_an_regions_clt']]} xxx position des régions les plus chères (derrière xxx) et devant les régions Grand-Est et Île-de-France."
       ),
       "Comme pour les terrains, les surfaces et montants moyens des maisons en Corse-du-Sud sont plus importants qu’en Haute-Corse." ,
       stringr::str_glue(
         "Depuis 2010, pour la Corse, la surface moyenne de plancher a évolué en dent de scie mais globalement à la baisse, passant de {ls_valeurs[['sm_m2_2010']]}m\u00b2 à {ls_valeurs[['sm_m2_an']]}m\u00b2."
       ),
       stringr::str_glue(
-        "Le prix moyen au mètre carré a fortement augmenté entre {ls_valeurs[['annee_etude']]} et {ls_valeurs[['annee_etude']]} passant de {ls_valeurs[['annee_etude']]} à {ls_valeurs[['annee_etude']]} euros. "
+        "Le prix moyen au mètre carré a fortement augmenté entre {ls_valeurs[['annee_etude']]} et {ls_valeurs[['annee_etude']]} passant de {ls_valeurs[['pt_m2_an_prec']]} à {ls_valeurs[['pt_m2_an']]} euros. "
       ),
       stringr::str_glue(
         "Le prix moyen d’achat d’une maison a progressé dans le m\u00eame temps de {ls_valeurs[['pm_tot_2010']]} à {ls_valeurs[['pm_tot_an']]} euros."
-      )
-    ),
-
-    # page3 premier paragraphe maisons
-    "p2h_texte" = c(
-      "La classe d'\u00e2ge des moins de 30 ans ach\u00eate en moyenne les terrains (les moins chers) mais privilégie quand m\u00eame une surface proche de la moyenne régionale. Du fait que la part de primo-accédant est particulièrement forte dans cette tranche d'age, le coût total du projet (maison+terrain) est aussi le moins important."   ,
-      stringr::str_glue(
-        "Comme attendu, plus le propriétaire est \u00e2gé, plus le prix du terrain acheté et le coût du projet total est élevé (xx\\% par rapport à la moyenne régionale)."
-      ),
-      stringr::str_glue(
-        "Selon la catégorie socio-professionnelle de l'acheteur, le prix moyen du terrain varie de {ls_valeurs[['st_m2_an_csp_range']][1]} à {ls_valeurs[['st_m2_an_csp_range']][2]} euros du mètre carré, les prix les plus élevés concernent les {ls_valeurs[['pt_an_pluscher_csp']]}. "
-      ),
-      "Les projet concernent très majoritairement la construction de résidences principales.",
-      stringr::str_glue(
-        "L'achat des terrains non viabilisés porte sur des parcelles de plus grande taille ({ls_valeurs[['st_m2_an_viabilisation_ouinon']][2]} au lieu de {ls_valeurs[['st_m2_an_viabilisation_ouinon']][1]} m\u00b2) avec un coût de projet plus important ({ls_valeurs[['cp_an_viabilisation_ouinon']][2]} au lieu de {ls_valeurs[['cp_an_viabilisation_ouinon']][1]} euros). Leur prix au mètre carré est normalement plus faible ({ls_valeurs[['pt_m2_an_viabilisation_ouinon']][2]} au lieu de {ls_valeurs[['pt_m2_an_viabilisation_ouinon']][1]} m\u00b2)."
       )
     ),
 
@@ -547,8 +545,6 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
       )
     )
   ) -> mon_texte
-  # purrr::map(mon_texte, utf8::utf8_valid)
-  purrr::map(mon_texte, utf8::as_utf8) -> mon_texte
   # purrr::map(mon_texte, validUTF8)
   purrr::map_dfr(mon_texte, ~ tibble::tibble("nblt_r" = length(.x)), .id = "par") -> t_paragraphes_new
   list("t_paragraphes_new" = t_paragraphes_new, "mon_texte" = mon_texte) -> ls_newtxt
