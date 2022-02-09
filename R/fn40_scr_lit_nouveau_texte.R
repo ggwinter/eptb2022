@@ -515,7 +515,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         "Depuis 2010, pour la Corse, la surface moyenne de plancher a évolué en dent de scie mais globalement à la baisse, passant de {ls_valeurs[['sm_m2_2010']]}m\u00b2 à {ls_valeurs[['sm_m2_an']]}m\u00b2."
       ),
       stringr::str_glue(
-        "Le prix moyen au mètre carré a fortement augmenté entre {ls_valeurs[['annee_etude']]} et {ls_valeurs[['annee_etude']]} passant de {ls_valeurs[['pt_m2_an_prec']]} à {ls_valeurs[['pt_m2_an']]} euros. "
+        "Le prix moyen au mètre carré a fortement augmenté passant de {ls_valeurs[['pt_m2_2010']]} à {ls_valeurs[['pt_m2_an']]} euros."
       ),
       stringr::str_glue(
         "Le prix moyen d’achat d’une maison a progressé dans le m\u00eame temps de {ls_valeurs[['pm_tot_2010']]} à {ls_valeurs[['pm_tot_an']]} euros."
@@ -535,7 +535,7 @@ fn40_scr_lit_nouveau_texte <- function(x = ls_dates$annee_etude) {
         "Près de la moitié ({ls_valeurs$nm_an_moe_part_parti_cor}) des constructions de maisons sont supervisées par les particuliers eux-m\u00eame pour un peu plus d'un quart (XX%) au niveau national."
       ),
       stringr::str_glue(
-        "L'intervention d'un constructeur de maisons individuelle ne se fait que dans {ls_valeurs$nm_an_moe_part_cmi_cor} des cas, alors qu'au niveau national, ce taux est de XX%, de m\u00eame pour les entrepreneurs et artisans oû les taux pour la Corse et France entière sont {ls_valeurs$nm_an_moe_part_eoa_cor} contre XX%."
+        "L'intervention d'un constructeur de maisons individuelles ne se fait que dans {ls_valeurs$nm_an_moe_part_cmi_cor} des cas, alors qu'au niveau national, ce taux est de XX%, de m\u00eame pour les entrepreneurs et artisans oû les taux pour la Corse et France entière sont {ls_valeurs$nm_an_moe_part_eoa_cor} contre XX%."
       ),
       stringr::str_glue(
         "Le prix moyen par mètre carré des maisons est de {ls_valeurs$pm_m2_an} euros ; il varie selon le ma\u00eetre d'oeuvre entre {ls_valeurs$pm_m2_an_moe_min %>% dplyr::pull(prix_m2) %>% format(., big.mark   = '.', decimal.mark = ',')} euros dans le cas des {ls_valeurs$pm_m2_an_moe_min %>% dplyr::pull(indic_cat)} à {ls_valeurs$pm_m2_an_moe_max %>% dplyr::pull(prix_m2) %>% format(., big.mark   = '.', decimal.mark = ',')} pour les {ls_valeurs$pm_m2_an_moe_max %>% dplyr::pull(indic_cat)}."
